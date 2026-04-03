@@ -39,6 +39,7 @@ Optional full publish rehearsal in a throwaway copy:
 If a rehearsal fails, it now keeps the temp copy automatically so you can inspect what went wrong.
 Use `./rehearsal_temp_status.sh` to inspect any saved copies, see active rehearsals that are still running, clean only failure-kept ones, or clean them all afterward.
 
+For the broader release and update flow, start with [`PUBLIC_REPO_GUIDE.md`](./PUBLIC_REPO_GUIDE.md).
 This lean public repo intentionally leaves out local model files, raw sidecars, and the optional Flash-MoE source checkout.
 
 After the first public push, add the workflow badge to `README.md` with:

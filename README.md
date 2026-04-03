@@ -3,44 +3,9 @@
 [![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
 
 
-This repo is a practical local-research and runtime toolkit for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro.
+This repo started as a local bring-up effort for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro. The main result is two validated winners from that research: a tuned Hypura path for raw speed and a resident Flash-MoE path for lower memory pressure.
 
-It includes:
-
-- a tuned fast path built around Hypura
-- a lower-memory alternate built around Flash-MoE
-- a benchmark loop for comparing and improving both
-- everyday commands for one-shot prompts, resident servers, and interactive chat
-- release-readiness checks for the public-facing tools
-- a lean public layout that leaves out local models, raw sidecars, and bulk run logs
-
-## Current status
-
-Two runtime styles are available:
-
-- fastest overall: Hypura
-- lower-memory alternate: Flash-MoE
-
-The benchmark and status tooling for those live under [`autoresearch/`](./autoresearch).
-
-## Lean public repo note
-
-This GitHub release repo is intentionally lean.
-
-It includes:
-
-- the tuned Hypura source tree used by the fast path
-- the benchmark and control scripts
-- curated benchmark summaries and the small set of run artifacts needed to support them
-
-It does **not** include:
-
-- local model files
-- the huge Flash-MoE sidecar data
-- the full raw run-log archive
-- the optional Flash-MoE source checkout
-
-If you want the lower-memory Flash-MoE path in this lean repo, follow [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.
+This public repo keeps the research outcome, the curated measurements, and the front-door commands without bundling the local-only model files and sidecars from the private workspace.
 
 ## Performance at a glance
 
@@ -144,28 +109,10 @@ If you want to understand the research state:
 
 If you want to prepare a release or update this public repo:
 
+- full release and update guide: [`PUBLIC_REPO_GUIDE.md`](./PUBLIC_REPO_GUIDE.md)
 - release checklist: [`RELEASE_CHECKLIST.md`](./RELEASE_CHECKLIST.md)
 - external runtime and model setup: [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md)
-- automated preflight command: `autoresearch/release_readiness_check.py`
-- lean repo audit: `python3 lean_repo_audit.py`
-- lean layout manifest: [`lean_repo_layout_manifest.json`](./lean_repo_layout_manifest.json)
-- one-command publish status: `./publish_status.sh` (follow the printed Current blockers, Release stage, and Suggested next action; once the repo is publish-ready, it now steps through first push, post-push polish, and finally no further publish-tooling steps)
-- machine-readable publish status: `./publish_status.sh --json` (includes `release_stage`, `release_stage_reason`, `blocking_items`, `suggested_next_action_command`, `suggested_next_action_reason`, `suggested_push_command`, and `suggested_post_publish_action_command`)
-- one-command public push prep: `./prepare_public_push.sh`
-- one-command public push prep plus failure-temp cleanup: `./prepare_public_push.sh --clean-failure-rehearsals`
-- one-command publish setup: `./make_publish_ready.sh --license mit --holder "Your Name" --remote https://github.com/you/repo.git`
-- preview the publish setup without changing files: `./make_publish_ready.sh --license mit --holder "Your Name" --remote https://github.com/you/repo.git --dry-run`
-- one-command full publish rehearsal in a temp copy: `./rehearse_publish_flow.sh`
-- keep the rehearsal temp copy even on success: `./rehearse_publish_flow.sh --keep-temp`
-- failed rehearsals keep their temp copy automatically for debugging
-- inspect saved rehearsal temp copies and active rehearsals: `./rehearsal_temp_status.sh`
-- remove only failed saved rehearsal temp copies: `./rehearsal_temp_status.sh --clean-failures`
-- remove all saved rehearsal temp copies after inspection: `./rehearsal_temp_status.sh --clean`
-- license install helper: `./install_license.sh mit --holder "Your Name"`
-- one-command post-push polish: `./finish_public_release.sh`
-- preview the post-push polish without changing files: `./finish_public_release.sh --dry-run`
-- direct CI badge helper: `./install_ci_badge.sh`
-- CI workflow: [`.github/workflows/release-readiness.yml`](./.github/workflows/release-readiness.yml) runs the user-facing preflight, the lean repo audit, and the full publish rehearsal
+- one-command status and next-step guide: `./publish_status.sh`
 
 ## How This Repo Is Organized
 
@@ -217,3 +164,31 @@ Release preflight:
 cd autoresearch
 python3 release_readiness_check.py
 ```
+
+## Current status
+
+Two runtime styles are available:
+
+- fastest overall: Hypura
+- lower-memory alternate: Flash-MoE
+
+The benchmark and status tooling for those live under [`autoresearch/`](./autoresearch).
+
+## Lean public repo note
+
+This GitHub release repo is intentionally lean.
+
+It includes:
+
+- the tuned Hypura source tree used by the fast path
+- the benchmark and control scripts
+- curated benchmark summaries and the small set of run artifacts needed to support them
+
+It does **not** include:
+
+- local model files
+- the huge Flash-MoE sidecar data
+- the full raw run-log archive
+- the optional Flash-MoE source checkout
+
+If you want the lower-memory Flash-MoE path in this lean repo, follow [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.
