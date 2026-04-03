@@ -112,6 +112,8 @@ server.serve_forever()
 
 
 def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
+    if process.poll() is None:
+        return "", ""
     stdout = ""
     stderr = ""
     if process.stdout is not None:
@@ -177,9 +179,13 @@ def start_fake_server(kind: str) -> tuple[subprocess.Popen[str], int]:
         text=True,
         bufsize=1,
     )
-    port = wait_for_server_port(process)
-    wait_for_port(port, process)
-    return process, port
+    try:
+        port = wait_for_server_port(process)
+        wait_for_port(port, process)
+        return process, port
+    except Exception:
+        stop_process(process)
+        raise
 
 
 def stop_process(process: subprocess.Popen[str] | None) -> None:
