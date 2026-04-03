@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import os
 import pty
 import selectors
@@ -10,6 +11,7 @@ import sys
 import tempfile
 import textwrap
 import time
+from http.server import BaseHTTPRequestHandler, HTTPServer
 from pathlib import Path
 
 
@@ -19,99 +21,90 @@ CHAT_CLIENT = ROOT / "gemma4_chat.py"
 FLASHMOE_ASK = ROOT / "flashmoe_gemma4_ask.sh"
 
 
-FAKE_SERVER_SOURCE = r"""
-import json
-import sys
-import time
-from http.server import BaseHTTPRequestHandler, HTTPServer
-from pathlib import Path
+def serve_fake_server(kind: str, ready_path: Path) -> None:
+    class Handler(BaseHTTPRequestHandler):
+        protocol_version = "HTTP/1.1"
 
-kind = sys.argv[1]
-port = int(sys.argv[2])
-ready_path = Path(sys.argv[3])
-
-
-class Handler(BaseHTTPRequestHandler):
-    protocol_version = "HTTP/1.1"
-
-    def do_GET(self):
-        if kind == "hypura" and self.path == "/api/tags":
-            body = json.dumps({"models": [{"name": "fake-hypura-stream"}]}).encode("utf-8")
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-            return
-        if kind == "flashmoe" and self.path == "/health":
-            body = b'{"status":"ok"}'
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.send_header("Content-Length", str(len(body)))
-            self.end_headers()
-            self.wfile.write(body)
-            return
-        self.send_response(404)
-        self.end_headers()
-
-    def do_POST(self):
-        length = int(self.headers.get("Content-Length", "0"))
-        payload = json.loads(self.rfile.read(length) or b"{}")
-        stream = bool(payload.get("stream"))
-
-        if kind == "hypura" and self.path == "/api/chat":
-            if not stream:
-                time.sleep(1.0)
-                body = json.dumps({"message": {"content": "alpha beta gamma"}}).encode("utf-8")
+        def do_GET(self):
+            if kind == "hypura" and self.path == "/api/tags":
+                body = textwrap.dedent(
+                    """
+                    {"models":[{"name":"fake-hypura-stream"}]}
+                    """
+                ).strip().encode("utf-8")
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
                 self.wfile.write(body)
                 return
-            self.send_response(200)
-            self.send_header("Content-Type", "application/x-ndjson")
-            self.end_headers()
-            for idx, chunk in enumerate(["alpha ", "beta ", "gamma"]):
-                line = json.dumps({"message": {"content": chunk}, "done": idx == 2}).encode("utf-8") + b"\n"
-                self.wfile.write(line)
-                self.wfile.flush()
-                time.sleep(0.5)
-            return
-
-        if kind == "flashmoe" and self.path == "/v1/chat/completions":
-            if not stream:
-                time.sleep(1.0)
-                body = json.dumps({"choices": [{"message": {"content": "delta epsilon zeta"}}]}).encode("utf-8")
+            if kind == "flashmoe" and self.path == "/health":
+                body = b'{"status":"ok"}'
                 self.send_response(200)
                 self.send_header("Content-Type", "application/json")
                 self.send_header("Content-Length", str(len(body)))
                 self.end_headers()
                 self.wfile.write(body)
                 return
-            self.send_response(200)
-            self.send_header("Content-Type", "text/event-stream")
+            self.send_response(404)
             self.end_headers()
-            for chunk in ["delta ", "epsilon ", "zeta"]:
-                line = ("data: " + json.dumps({"choices": [{"delta": {"content": chunk}}]}) + "\n\n").encode("utf-8")
-                self.wfile.write(line)
+
+        def do_POST(self):
+            length = int(self.headers.get("Content-Length", "0"))
+            payload = json.loads(self.rfile.read(length) or b"{}")
+            stream = bool(payload.get("stream"))
+
+            if kind == "hypura" and self.path == "/api/chat":
+                if not stream:
+                    time.sleep(1.0)
+                    body = b'{"message":{"content":"alpha beta gamma"}}'
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                self.send_response(200)
+                self.send_header("Content-Type", "application/x-ndjson")
+                self.end_headers()
+                for idx, chunk in enumerate(["alpha ", "beta ", "gamma"]):
+                    line = json.dumps({"message": {"content": chunk}, "done": idx == 2}).encode("utf-8") + b"\n"
+                    self.wfile.write(line)
+                    self.wfile.flush()
+                    time.sleep(0.5)
+                return
+
+            if kind == "flashmoe" and self.path == "/v1/chat/completions":
+                if not stream:
+                    time.sleep(1.0)
+                    body = b'{"choices":[{"message":{"content":"delta epsilon zeta"}}]}'
+                    self.send_response(200)
+                    self.send_header("Content-Type", "application/json")
+                    self.send_header("Content-Length", str(len(body)))
+                    self.end_headers()
+                    self.wfile.write(body)
+                    return
+                self.send_response(200)
+                self.send_header("Content-Type", "text/event-stream")
+                self.end_headers()
+                for chunk in ["delta ", "epsilon ", "zeta"]:
+                    line = ("data: " + json.dumps({"choices": [{"delta": {"content": chunk}}]}) + "\n\n").encode("utf-8")
+                    self.wfile.write(line)
+                    self.wfile.flush()
+                    time.sleep(0.5)
+                self.wfile.write(b"data: [DONE]\n\n")
                 self.wfile.flush()
-                time.sleep(0.5)
-            self.wfile.write(b"data: [DONE]\n\n")
-            self.wfile.flush()
-            return
+                return
 
-        self.send_response(404)
-        self.end_headers()
+            self.send_response(404)
+            self.end_headers()
 
-    def log_message(self, format, *args):
-        pass
+        def log_message(self, format, *args):
+            pass
 
-
-server = HTTPServer(("127.0.0.1", port), Handler)
-ready_path.write_text(str(server.server_port), encoding="utf-8")
-server.serve_forever()
-"""
+    server = HTTPServer(("127.0.0.1", 0), Handler)
+    ready_path.write_text(str(server.server_port), encoding="utf-8")
+    server.serve_forever()
 
 
 def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
@@ -172,7 +165,7 @@ def start_fake_server(kind: str) -> tuple[subprocess.Popen[str], int]:
     with tempfile.NamedTemporaryFile(prefix="fake-server-ready-", delete=False) as handle:
         ready_path = Path(handle.name)
     process = subprocess.Popen(
-        [sys.executable, "-c", FAKE_SERVER_SOURCE, kind, "0", str(ready_path)],
+        [sys.executable, str(Path(__file__).resolve()), "--fake-server", kind, str(ready_path)],
         stdout=subprocess.DEVNULL,
         stderr=subprocess.PIPE,
         text=True,
@@ -453,4 +446,7 @@ def main() -> int:
 
 
 if __name__ == "__main__":
+    if len(sys.argv) == 4 and sys.argv[1] == "--fake-server":
+        serve_fake_server(sys.argv[2], Path(sys.argv[3]))
+        raise SystemExit(0)
     raise SystemExit(main())
