@@ -35,6 +35,9 @@ jobs:
           SKIP_STREAMING_REGRESSION_SMOKE: "1"
         run: python3 release_readiness_check.py
 
+      - name: Remove workflow-only artifacts before lean audit
+        run: rm -rf .venv __pycache__ results/chat_sessions
+
       - name: Run lean public repo audit
         run: python3 ../lean_repo_audit.py
 
