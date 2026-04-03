@@ -41,7 +41,7 @@ Add `--stream` if you want token streaming explicitly. Interactive terminal use 
 If you want a quick regression check for the new streaming and cleanup behavior without touching the real model, run `python3 streaming_regression_smoke.py`.
 If you want one release-readiness preflight before publishing this workspace, run `python3 release_readiness_check.py`.
 The same preflight now runs in the root GitHub Actions workflow on pushes and pull requests.
-For the human release pass around that automated preflight, use `../RELEASE_CHECKLIST.md`.
+For the human release pass around that automated preflight, use `../docs/RELEASE_CHECKLIST.md`.
 If you need to inspect what is live right now or stop a live server cleanly, use `./gemma4_server_status.sh` and `./gemma4_server_stop.sh`.
 If you want a real interactive chat session with history preserved across turns, run `python3 gemma4_chat.py --mode auto`.
 Add `--replace` there too if you want it to switch runtimes cleanly instead of leaving the old one up.

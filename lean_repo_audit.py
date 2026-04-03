@@ -93,6 +93,23 @@ def find_layout_issues(layout_manifest: dict) -> dict[str, list[str]]:
     issues["missing_root_dirs"] = missing
     issues["unexpected_root_dirs"] = unexpected
 
+    docs_root = ROOT / "docs"
+    docs_files, docs_dirs = direct_entries(docs_root)
+    missing, unexpected = compare_entries(docs_files, set(layout_manifest.get("docs_files", [])))
+    issues["missing_docs_files"] = missing
+    issues["unexpected_docs_files"] = unexpected
+    missing, unexpected = compare_entries(docs_dirs, set(layout_manifest.get("docs_dirs", [])))
+    issues["missing_docs_dirs"] = missing
+    issues["unexpected_docs_dirs"] = unexpected
+
+    license_template_root = docs_root / "license-templates"
+    license_template_files, license_template_dirs = direct_entries(license_template_root)
+    missing, unexpected = compare_entries(license_template_files, set(layout_manifest.get("docs_license_template_files", [])))
+    issues["missing_docs_license_template_files"] = missing
+    issues["unexpected_docs_license_template_files"] = unexpected
+    _, unexpected = compare_entries(license_template_dirs, set())
+    issues["unexpected_docs_license_template_dirs"] = unexpected
+
     github_root = ROOT / ".github"
     github_files, github_dirs = direct_entries(github_root)
     _, unexpected = compare_entries(github_files, set())

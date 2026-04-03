@@ -38,10 +38,10 @@ done
 
 case "$kind" in
   mit)
-    template="LICENSE-MIT.template"
+    template="docs/license-templates/LICENSE-MIT.template"
     ;;
   apache|apache-2.0)
-    template="LICENSE-APACHE-2.0.template"
+    template="docs/license-templates/LICENSE-APACHE-2.0.template"
     ;;
   *)
     echo "Unsupported license kind: $kind" >&2

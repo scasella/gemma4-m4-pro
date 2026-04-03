@@ -1,8 +1,9 @@
 # Gemma 4 26B A4B on a 24 GB M4 Pro
 
-<p align="center"><strong>28.50 → 57.01 tok/s</strong> on tuned Hypura · <strong>19.11 tok/s</strong> on the low-memory Flash-MoE resident server · <strong>4.32 GB</strong> warm memory footprint for the lightweight path</p>
-
 [![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
+
+
+<p align="center"><strong>28.50 → 57.01 tok/s</strong> on tuned Hypura · <strong>19.11 tok/s</strong> on the low-memory Flash-MoE resident server · <strong>4.32 GB</strong> warm memory footprint for the lightweight path</p>
 
 This repo started as a local bring-up effort for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro. The main result is two validated winners from that research: a tuned Hypura path for raw speed and a resident Flash-MoE path for lower memory pressure.
 
@@ -110,9 +111,9 @@ If you want to understand the research state:
 
 If you want to prepare a release or update this public repo:
 
-- full release and update guide: [`PUBLIC_REPO_GUIDE.md`](./PUBLIC_REPO_GUIDE.md)
-- release checklist: [`RELEASE_CHECKLIST.md`](./RELEASE_CHECKLIST.md)
-- external runtime and model setup: [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md)
+- full release and update guide: [`PUBLIC_REPO_GUIDE.md`](./docs/PUBLIC_REPO_GUIDE.md)
+- release checklist: [`RELEASE_CHECKLIST.md`](./docs/RELEASE_CHECKLIST.md)
+- external runtime and model setup: [`SETUP_EXTERNALS.md`](./docs/SETUP_EXTERNALS.md)
 - one-command status and next-step guide: `./publish_status.sh`
 
 ## How This Repo Is Organized
@@ -124,7 +125,7 @@ If you want to prepare a release or update this public repo:
 - [`autoresearch/results/runtime_comparison.md`](./autoresearch/results/runtime_comparison.md): curated benchmark summary
 - [`autoresearch/results/curated_results_manifest.json`](./autoresearch/results/curated_results_manifest.json): exact saved result files intentionally kept in the lean public repo
 - [`lean_repo_layout_manifest.json`](./lean_repo_layout_manifest.json): expected high-level public file layout for this lean release repo
-- [`RELEASE_CHECKLIST.md`](./RELEASE_CHECKLIST.md): human release checklist
+- [`docs/`](./docs): release guide, release checklist, external setup notes, and license helper docs
 
 If you are just trying to use the model, start in [`autoresearch/`](./autoresearch).
 If you are trying to understand how the fast runtime was tuned, also read [`hypura-main/GEMMA4_M4_PRO.md`](./hypura-main/GEMMA4_M4_PRO.md).
@@ -192,4 +193,4 @@ It does **not** include:
 - the full raw run-log archive
 - the optional Flash-MoE source checkout
 
-If you want the lower-memory Flash-MoE path in this lean repo, follow [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.
+If you want the lower-memory Flash-MoE path in this lean repo, follow [`SETUP_EXTERNALS.md`](./docs/SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.

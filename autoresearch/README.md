@@ -9,7 +9,7 @@ The loop is still agent-driven. The repo gives the agent a fixed benchmark harne
 This public repo keeps the benchmark harness and curated results, but leaves out the local model file, the huge Flash-MoE sidecar data, and the optional Flash-MoE source checkout.
 
 - The fast Hypura path is included here.
-- The Flash-MoE path is still supported, but you need to clone the external runtime checkout described in [`../SETUP_EXTERNALS.md`](../SETUP_EXTERNALS.md).
+- The Flash-MoE path is still supported, but you need to clone the external runtime checkout described in [`../docs/SETUP_EXTERNALS.md`](../docs/SETUP_EXTERNALS.md).
 - The `llama.cpp` baseline is now optional for this lean public repo.
 
 The exact saved result files intentionally kept in this public repo are listed in [`results/curated_results_manifest.json`](./results/curated_results_manifest.json).
@@ -267,7 +267,7 @@ python3 release_readiness_check.py
 
 That command runs the public entrypoint syntax checks, runs the streaming regression smoke, and confirms the top-level `show_best.py` summary still renders.
 There is now also a GitHub Actions workflow at the project root that runs the same preflight on pushes and pull requests.
-For the human side of release prep, there is also a checklist at `../RELEASE_CHECKLIST.md`.
+For the human side of release prep, there is also a checklist at `../docs/RELEASE_CHECKLIST.md`.
 
 To see what is live right now, or stop a live Gemma server cleanly:
 

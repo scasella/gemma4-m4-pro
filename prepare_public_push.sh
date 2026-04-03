@@ -124,7 +124,7 @@ fi
 if [[ ! -f LICENSE ]]; then
   echo
   echo "No root LICENSE file found yet."
-  echo "Choose one before pushing: see LICENSE_OPTIONS.md"
+  echo "Choose one before pushing: see docs/LICENSE_OPTIONS.md"
 fi
 
 echo

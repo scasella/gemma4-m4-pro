@@ -414,7 +414,10 @@ def main() -> int:
         print(f"  Delete saved chat:     python3 {CHAT_CLIENT_PATH} --delete-session NAME")
         print(f"  Streaming smoke:       python3 {ROOT / 'streaming_regression_smoke.py'}")
         print(f"  Release preflight:     python3 {ROOT / 'release_readiness_check.py'}")
-        print(f"  Release checklist:     {ROOT.parent / 'RELEASE_CHECKLIST.md'}")
+        release_checklist = ROOT.parent / 'docs' / 'RELEASE_CHECKLIST.md'
+        if not release_checklist.exists():
+            release_checklist = ROOT.parent / 'RELEASE_CHECKLIST.md'
+        print(f"  Release checklist:     {release_checklist}")
         print(f"  Sync Flash-MoE alt:    {ROOT / 'sync_flashmoe_best.py'}")
         print(f"  Sync FM server alt:    {ROOT / 'sync_flashmoe_server_best.py'}")
     print(f"  Ask either runtime:    {ANSWER_WRAPPER_PATH} --mode speed|memory|auto \"your prompt\"")

@@ -2,13 +2,7 @@
   "description": "Expected high-level file layout for this lean public repo.",
   "root_files": [
     ".gitignore",
-    "LICENSE-APACHE-2.0.template",
-    "LICENSE-MIT.template",
-    "LICENSE_OPTIONS.md",
-    "PUBLIC_REPO_GUIDE.md",
     "README.md",
-    "RELEASE_CHECKLIST.md",
-    "SETUP_EXTERNALS.md",
     "chat_gemma4.sh",
     "finish_public_release.sh",
     "install_ci_badge.sh",
@@ -28,8 +22,22 @@
   "root_dirs": [
     ".github",
     "autoresearch",
+    "docs",
     "hypura-main",
     "models"
+  ],
+  "docs_files": [
+    "LICENSE_OPTIONS.md",
+    "PUBLIC_REPO_GUIDE.md",
+    "RELEASE_CHECKLIST.md",
+    "SETUP_EXTERNALS.md"
+  ],
+  "docs_dirs": [
+    "license-templates"
+  ],
+  "docs_license_template_files": [
+    "LICENSE-APACHE-2.0.template",
+    "LICENSE-MIT.template"
   ],
   "github_dirs": [
     "workflows"

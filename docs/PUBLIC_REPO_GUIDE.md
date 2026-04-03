@@ -114,5 +114,5 @@ If you want the lower-level badge helper directly:
 - release checklist: [`RELEASE_CHECKLIST.md`](./RELEASE_CHECKLIST.md)
 - external runtime and model setup: [`SETUP_EXTERNALS.md`](./SETUP_EXTERNALS.md)
 - license choices: [`LICENSE_OPTIONS.md`](./LICENSE_OPTIONS.md)
-- public preflight: [`autoresearch/release_readiness_check.py`](./autoresearch/release_readiness_check.py)
-- workflow file: [`.github/workflows/release-readiness.yml`](./.github/workflows/release-readiness.yml)
+- public preflight: [`autoresearch/release_readiness_check.py`](../autoresearch/release_readiness_check.py)
+- workflow file: [`.github/workflows/release-readiness.yml`](../.github/workflows/release-readiness.yml)

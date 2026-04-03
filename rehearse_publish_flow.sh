@@ -40,7 +40,7 @@ done
 
 tmpdir="$(mktemp -d /tmp/gemma-publish-rehearsal.XXXXXX)"
 created_at="$(date -u +"%Y-%m-%dT%H:%M:%SZ")"
-meta_path="${tmpdir}.meta.json"
+meta_path="$tmpdir/.gemma_publish_rehearsal_meta.json"
 write_metadata() {
   local final_state="$1"
   local keep_reason="$2"
@@ -88,7 +88,6 @@ cleanup() {
   fi
   write_metadata "cleaned" "success_cleanup" "$status"
   rm -rf "$tmpdir"
-  rm -f "$meta_path"
   echo "Cleaned up rehearsal copy."
 }
 trap cleanup EXIT
