@@ -2,13 +2,14 @@
 from __future__ import annotations
 
 import json
+import multiprocessing
 import os
 import pty
+import queue
 import selectors
 import socket
 import subprocess
 import sys
-import tempfile
 import textwrap
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
@@ -21,7 +22,7 @@ CHAT_CLIENT = ROOT / "gemma4_chat.py"
 FLASHMOE_ASK = ROOT / "flashmoe_gemma4_ask.sh"
 
 
-def serve_fake_server(kind: str, ready_path: Path) -> None:
+def serve_fake_server(kind: str, port_queue: multiprocessing.Queue[int]) -> None:
     class Handler(BaseHTTPRequestHandler):
         protocol_version = "HTTP/1.1"
 
@@ -103,12 +104,32 @@ def serve_fake_server(kind: str, ready_path: Path) -> None:
             pass
 
     server = HTTPServer(("127.0.0.1", 0), Handler)
-    ready_path.write_text(str(server.server_port), encoding="utf-8")
+    port_queue.put(server.server_port)
     server.serve_forever()
 
 
-def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
-    if process.poll() is None:
+class SpawnedFakeServerProcess:
+    def __init__(self, process: multiprocessing.Process):
+        self._process = process
+
+    def poll(self) -> int | None:
+        return None if self._process.is_alive() else self._process.exitcode
+
+    def terminate(self) -> None:
+        self._process.terminate()
+
+    def kill(self) -> None:
+        self._process.kill()
+
+    def wait(self, timeout: float | None = None) -> int | None:
+        self._process.join(timeout)
+        if self._process.is_alive():
+            raise subprocess.TimeoutExpired(cmd="fake-server", timeout=timeout)
+        return self._process.exitcode
+
+
+def process_output(process: subprocess.Popen[str] | SpawnedFakeServerProcess) -> tuple[str, str]:
+    if process.poll() is None or not isinstance(process, subprocess.Popen):
         return "", ""
     stdout = ""
     stderr = ""
@@ -119,13 +140,13 @@ def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
     return stdout, stderr
 
 
-def wait_for_server_port(ready_path: Path, process: subprocess.Popen[str], timeout_s: float = 15.0) -> int:
+def wait_for_server_port(port_queue: multiprocessing.Queue[int], process: SpawnedFakeServerProcess, timeout_s: float = 15.0) -> int:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
-        if ready_path.exists():
-            line = ready_path.read_text(encoding="utf-8").strip()
-            if line:
-                return int(line)
+        try:
+            return int(port_queue.get_nowait())
+        except queue.Empty:
+            pass
         if process.poll() is not None:
             stdout, stderr = process_output(process)
             raise RuntimeError(
@@ -140,7 +161,7 @@ def wait_for_server_port(ready_path: Path, process: subprocess.Popen[str], timeo
     )
 
 
-def wait_for_port(port: int, process: subprocess.Popen[str], timeout_s: float = 15.0) -> None:
+def wait_for_port(port: int, process: SpawnedFakeServerProcess, timeout_s: float = 15.0) -> None:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
         if process.poll() is not None:
@@ -161,27 +182,22 @@ def wait_for_port(port: int, process: subprocess.Popen[str], timeout_s: float = 
     )
 
 
-def start_fake_server(kind: str) -> tuple[subprocess.Popen[str], int]:
-    with tempfile.NamedTemporaryFile(prefix="fake-server-ready-", delete=False) as handle:
-        ready_path = Path(handle.name)
-    process = subprocess.Popen(
-        [sys.executable, str(Path(__file__).resolve()), "--fake-server", kind, str(ready_path)],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.PIPE,
-        text=True,
-    )
+def start_fake_server(kind: str) -> tuple[SpawnedFakeServerProcess, int]:
+    ctx = multiprocessing.get_context("spawn")
+    port_queue: multiprocessing.Queue[int] = ctx.Queue()
+    raw_process = ctx.Process(target=serve_fake_server, args=(kind, port_queue))
+    raw_process.start()
+    process = SpawnedFakeServerProcess(raw_process)
     try:
-        port = wait_for_server_port(ready_path, process)
+        port = wait_for_server_port(port_queue, process)
         wait_for_port(port, process)
         return process, port
     except Exception:
         stop_process(process)
         raise
-    finally:
-        ready_path.unlink(missing_ok=True)
 
 
-def stop_process(process: subprocess.Popen[str] | None) -> None:
+def stop_process(process: subprocess.Popen[str] | SpawnedFakeServerProcess | None) -> None:
     if process is None or process.poll() is not None:
         return
     process.terminate()
@@ -370,7 +386,12 @@ def run_buffered_chat_smoke(hypura_port: int) -> None:
             pass
 
 
-def run_cleanup_smoke(hypura_process: subprocess.Popen[str], flashmoe_process: subprocess.Popen[str], hypura_port: int, flashmoe_port: int) -> None:
+def run_cleanup_smoke(
+    hypura_process: SpawnedFakeServerProcess,
+    flashmoe_process: SpawnedFakeServerProcess,
+    hypura_port: int,
+    flashmoe_port: int,
+) -> None:
     state_file = "/tmp/gemma-streaming-smoke-auto-state.json"
     try:
         os.remove(state_file)
@@ -446,7 +467,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    if len(sys.argv) == 4 and sys.argv[1] == "--fake-server":
-        serve_fake_server(sys.argv[2], Path(sys.argv[3]))
-        raise SystemExit(0)
     raise SystemExit(main())
