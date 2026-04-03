@@ -105,36 +105,81 @@ class Handler(BaseHTTPRequestHandler):
         pass
 
 
-HTTPServer(("127.0.0.1", port), Handler).serve_forever()
+server = HTTPServer(("127.0.0.1", port), Handler)
+print(server.server_port, flush=True)
+server.serve_forever()
 """
 
 
-def free_port() -> int:
-    with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
-        sock.bind(("127.0.0.1", 0))
-        return int(sock.getsockname()[1])
+def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
+    stdout = ""
+    stderr = ""
+    if process.stdout is not None:
+        stdout = process.stdout.read()
+    if process.stderr is not None:
+        stderr = process.stderr.read()
+    return stdout, stderr
 
 
-def wait_for_port(port: int, timeout_s: float = 5.0) -> None:
+def wait_for_server_port(process: subprocess.Popen[str], timeout_s: float = 15.0) -> int:
+    if process.stdout is None:
+        raise RuntimeError("Fake server process has no stdout pipe.")
+    selector = selectors.DefaultSelector()
+    selector.register(process.stdout, selectors.EVENT_READ)
+    deadline = time.time() + timeout_s
+    try:
+        while time.time() < deadline:
+            if process.poll() is not None:
+                stdout, stderr = process_output(process)
+                raise RuntimeError(
+                    "Fake server exited before reporting its port."
+                    f" stdout={stdout!r} stderr={stderr!r}"
+                )
+            if selector.select(timeout=0.1):
+                line = process.stdout.readline().strip()
+                if line:
+                    return int(line)
+    finally:
+        selector.close()
+    stdout, stderr = process_output(process)
+    raise RuntimeError(
+        "Timed out waiting for fake server startup."
+        f" stdout={stdout!r} stderr={stderr!r}"
+    )
+
+
+def wait_for_port(port: int, process: subprocess.Popen[str], timeout_s: float = 15.0) -> None:
     deadline = time.time() + timeout_s
     while time.time() < deadline:
+        if process.poll() is not None:
+            stdout, stderr = process_output(process)
+            raise RuntimeError(
+                f"Fake server for port {port} exited before becoming ready."
+                f" stdout={stdout!r} stderr={stderr!r}"
+            )
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.settimeout(0.2)
             if sock.connect_ex(("127.0.0.1", port)) == 0:
                 return
         time.sleep(0.05)
-    raise RuntimeError(f"Timed out waiting for port {port} to become ready.")
-
-
-def start_fake_server(kind: str, port: int) -> subprocess.Popen[str]:
-    process = subprocess.Popen(
-        [sys.executable, "-c", FAKE_SERVER_SOURCE, kind, str(port)],
-        stdout=subprocess.DEVNULL,
-        stderr=subprocess.DEVNULL,
-        text=True,
+    stdout, stderr = process_output(process)
+    raise RuntimeError(
+        f"Timed out waiting for port {port} to become ready."
+        f" stdout={stdout!r} stderr={stderr!r}"
     )
-    wait_for_port(port)
-    return process
+
+
+def start_fake_server(kind: str) -> tuple[subprocess.Popen[str], int]:
+    process = subprocess.Popen(
+        [sys.executable, "-c", FAKE_SERVER_SOURCE, kind, "0"],
+        stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE,
+        text=True,
+        bufsize=1,
+    )
+    port = wait_for_server_port(process)
+    wait_for_port(port, process)
+    return process, port
 
 
 def stop_process(process: subprocess.Popen[str] | None) -> None:
@@ -382,11 +427,8 @@ def run_cleanup_smoke(hypura_process: subprocess.Popen[str], flashmoe_process: s
 
 
 def main() -> int:
-    hypura_port = free_port()
-    flashmoe_port = free_port()
-
-    hypura_process = start_fake_server("hypura", hypura_port)
-    flashmoe_process = start_fake_server("flashmoe", flashmoe_port)
+    hypura_process, hypura_port = start_fake_server("hypura")
+    flashmoe_process, flashmoe_port = start_fake_server("flashmoe")
     try:
         run_streaming_answer_smoke(hypura_port)
         run_flashmoe_streaming_smoke(flashmoe_port)
