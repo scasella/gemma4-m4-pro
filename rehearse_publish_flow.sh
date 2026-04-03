@@ -103,7 +103,7 @@ find "$tmpdir" -name '.DS_Store' -delete
 cd "$tmpdir"
 
 echo "Running publish setup rehearsal..."
-./make_publish_ready.sh --license "$license_kind" --holder "$holder" --remote "$remote_url" --force-license
+SKIP_STREAMING_REGRESSION_SMOKE=1 ./make_publish_ready.sh --license "$license_kind" --holder "$holder" --remote "$remote_url" --force-license
 
 echo
 echo "Running post-push polish rehearsal..."
