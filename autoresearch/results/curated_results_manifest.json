@@ -12,6 +12,7 @@
     "flashmoe_server_probe_latest.json",
     "hypura_server_probe_latest.json",
     "machine_profile.json",
+    "readme_research_summary.json",
     "runtime_comparison.md"
   ],
   "run_artifacts": [

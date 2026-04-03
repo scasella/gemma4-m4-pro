@@ -44,6 +44,7 @@ def main() -> int:
     python_files = [
         ROOT / "prepare.py",
         ROOT / "train.py",
+        ROOT / "readme_research_summary.py",
         ROOT / "show_best.py",
         ROOT / "gemma4_chat.py",
         ROOT / "refresh_current_state.py",
@@ -88,6 +89,11 @@ def main() -> int:
         )
 
     run_step(
+        "README research summary",
+        [sys.executable, str(ROOT / "readme_research_summary.py"), "--check"],
+    )
+
+    run_step(
         "show_best summary",
         ["uv", "run", "show_best.py"],
     )
@@ -100,6 +106,7 @@ def main() -> int:
         print("  - streaming regression smoke was skipped for this environment")
     else:
         print("  - streaming and cleanup regression smoke passed")
+    print("  - README chart summary is current")
     print("  - top-level status summary still renders")
     return 0
 

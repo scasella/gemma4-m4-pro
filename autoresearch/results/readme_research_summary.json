@@ -1,0 +1,604 @@
+{
+  "generated_at": "2026-04-03T01:02:56+00:00",
+  "description": "Compact research summary backing the root README progress charts and comparison claims.",
+  "machine": {
+    "model_path": "gemma-4-26B-A4B-it-Q4_K_M.gguf",
+    "total_memory_gb": 24.0,
+    "performance_cores": 10,
+    "efficiency_cores": 4
+  },
+  "overall_frontier": {
+    "speed_track": [
+      {
+        "run_id": "20260402T200315Z-llama-cpp-smoke-verification",
+        "backend": "llama.cpp",
+        "label": "Usable llama.cpp anchor",
+        "phase": "baseline",
+        "change": "Established the first working baseline for this exact laptop and model.",
+        "description": "llama.cpp smoke verification",
+        "status": "keep",
+        "track": "speed",
+        "adopted": false,
+        "validated": false,
+        "exploratory_only": false,
+        "evidence": "results.tsv",
+        "metrics": {
+          "gen_tok_s": 28.5,
+          "prompt_tok_s": 12.4,
+          "ttft_ms": 35.0877,
+          "load_s": 32.294,
+          "min_free_gb": 4.1492,
+          "swap_delta_gb": 0.6982
+        },
+        "delta_vs_previous_pct": null
+      },
+      {
+        "run_id": "20260402T203711Z-hypura-server-bench-smoke",
+        "backend": "hypura",
+        "label": "First usable Hypura server path",
+        "phase": "backend_switch",
+        "change": "Moved the fast path onto the Hypura resident server route.",
+        "description": "hypura server bench smoke",
+        "status": "keep",
+        "track": "speed",
+        "adopted": false,
+        "validated": false,
+        "exploratory_only": false,
+        "evidence": "results.tsv",
+        "metrics": {
+          "gen_tok_s": 52.0649,
+          "prompt_tok_s": 21468.0347,
+          "ttft_ms": 22.3743,
+          "load_s": 0.9672,
+          "min_free_gb": 1.6801,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": 82.68
+      },
+      {
+        "run_id": "20260402T210451Z-hypura-strict-reserve-probe",
+        "backend": "hypura",
+        "label": "Memory reserve respected",
+        "phase": "memory_reserve",
+        "change": "Stopped Hypura from planning as if the whole machine were free.",
+        "description": "hypura strict reserve probe",
+        "status": "keep",
+        "track": "speed",
+        "adopted": false,
+        "validated": false,
+        "exploratory_only": false,
+        "evidence": "results/runs/20260402T210451Z-hypura-strict-reserve-probe.json",
+        "metrics": {
+          "gen_tok_s": 54.5304,
+          "prompt_tok_s": 43.4264,
+          "ttft_ms": 1584.2064,
+          "load_s": 4.3624,
+          "min_free_gb": 9.6083,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": 4.74
+      },
+      {
+        "run_id": "20260402T212311Z-hypura-4096-combo-prompt-stable",
+        "backend": "hypura",
+        "label": "Validated Hypura winner",
+        "phase": "validated_winner",
+        "change": "Locked the adopted three-pass winner.",
+        "description": "hypura 4096 combo prompt stable",
+        "status": "keep",
+        "track": "speed",
+        "adopted": true,
+        "validated": true,
+        "exploratory_only": false,
+        "evidence": "results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable.json",
+        "metrics": {
+          "gen_tok_s": 57.0126,
+          "prompt_tok_s": 67.441,
+          "ttft_ms": 1025.7408,
+          "load_s": 1.9716,
+          "min_free_gb": 9.3331,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": 0.11
+      },
+      {
+        "run_id": "20260402T214323Z-hypura-4096-tb13-probe",
+        "backend": "hypura",
+        "label": "Exploratory peak",
+        "phase": "exploratory_peak",
+        "change": "A one-pass probe beat the adopted winner, but it did not survive follow-up stability checks.",
+        "description": "hypura 4096 tb13 probe",
+        "status": "discard",
+        "track": "speed",
+        "adopted": false,
+        "validated": false,
+        "exploratory_only": true,
+        "evidence": "results.tsv",
+        "metrics": {
+          "gen_tok_s": 57.9394,
+          "prompt_tok_s": 60.1696,
+          "ttft_ms": 1147.3983,
+          "load_s": 3.3927,
+          "min_free_gb": 8.0315,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": 1.63
+      }
+    ],
+    "memory_track": [
+      {
+        "run_id": "20260402T233718Z-flashmoe-slot-bank-16-smoke",
+        "backend": "flashmoe",
+        "label": "First usable Flash-MoE smoke run",
+        "phase": "smoke",
+        "change": "Proved the Gemma 4 Flash-MoE route could answer correctly on this machine.",
+        "description": "flashmoe slot-bank 16 smoke",
+        "status": "discard",
+        "track": "memory",
+        "adopted": false,
+        "validated": false,
+        "exploratory_only": false,
+        "evidence": "results.tsv",
+        "metrics": {
+          "gen_tok_s": 12.2,
+          "prompt_tok_s": 7.6,
+          "ttft_ms": 81.9672,
+          "load_s": 21.5222,
+          "min_free_gb": 8.2795,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": null
+      },
+      {
+        "run_id": "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-",
+        "backend": "flashmoe",
+        "label": "Validated Flash-MoE CLI fallback",
+        "phase": "validated_cli",
+        "change": "Locked the three-pass one-shot alternate.",
+        "description": "flashmoe slot-bank 16 cpu dense stable",
+        "status": "discard",
+        "track": "memory",
+        "adopted": true,
+        "validated": true,
+        "exploratory_only": false,
+        "evidence": "results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-.json",
+        "metrics": {
+          "gen_tok_s": 13.9,
+          "prompt_tok_s": 10.9,
+          "ttft_ms": 71.9424,
+          "load_s": 18.6859,
+          "min_free_gb": 8.8095,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": -4.79
+      },
+      {
+        "run_id": "20260403T004039Z-flashmoe-server-slot-bank-16-cpu",
+        "backend": "flashmoe_server",
+        "label": "Resident-server architecture shift",
+        "phase": "resident_server",
+        "change": "Keeping Flash-MoE hot removed most of the one-shot startup penalty and became the practical low-memory path.",
+        "description": "flashmoe server slot-bank 16 cpu dense stable",
+        "status": "discard",
+        "track": "memory",
+        "adopted": true,
+        "validated": true,
+        "exploratory_only": false,
+        "evidence": "results/runs/20260403T004039Z-flashmoe-server-slot-bank-16-cpu.json",
+        "metrics": {
+          "gen_tok_s": 19.1107,
+          "prompt_tok_s": 22.3626,
+          "ttft_ms": 3048.1582,
+          "load_s": 9.1907,
+          "min_free_gb": 10.7039,
+          "swap_delta_gb": 0.0
+        },
+        "delta_vs_previous_pct": 26.56
+      }
+    ]
+  },
+  "hypura_progress": [
+    {
+      "run_id": "20260402T200315Z-llama-cpp-smoke-verification",
+      "backend": "llama.cpp",
+      "label": "Usable llama.cpp anchor",
+      "phase": "baseline",
+      "change": "Established the first working baseline for this exact laptop and model.",
+      "description": "llama.cpp smoke verification",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 28.5,
+        "prompt_tok_s": 12.4,
+        "ttft_ms": 35.0877,
+        "load_s": 32.294,
+        "min_free_gb": 4.1492,
+        "swap_delta_gb": 0.6982
+      },
+      "delta_vs_previous_pct": null
+    },
+    {
+      "run_id": "20260402T203711Z-hypura-server-bench-smoke",
+      "backend": "hypura",
+      "label": "First usable Hypura server path",
+      "phase": "backend_switch",
+      "change": "Moved the fast path onto the Hypura resident server route.",
+      "description": "hypura server bench smoke",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 52.0649,
+        "prompt_tok_s": 21468.0347,
+        "ttft_ms": 22.3743,
+        "load_s": 0.9672,
+        "min_free_gb": 1.6801,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 82.68
+    },
+    {
+      "run_id": "20260402T210451Z-hypura-strict-reserve-probe",
+      "backend": "hypura",
+      "label": "Memory reserve respected",
+      "phase": "memory_reserve",
+      "change": "Stopped Hypura from planning as if the whole machine were free.",
+      "description": "hypura strict reserve probe",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results/runs/20260402T210451Z-hypura-strict-reserve-probe.json",
+      "metrics": {
+        "gen_tok_s": 54.5304,
+        "prompt_tok_s": 43.4264,
+        "ttft_ms": 1584.2064,
+        "load_s": 4.3624,
+        "min_free_gb": 9.6083,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 4.74
+    },
+    {
+      "run_id": "20260402T210949Z-hypura-context-4096-stable",
+      "backend": "hypura",
+      "label": "Context 4096 adopted",
+      "phase": "context",
+      "change": "Raised context without giving up the free-memory floor.",
+      "description": "hypura context 4096 stable",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 55.437,
+        "prompt_tok_s": 68.1921,
+        "ttft_ms": 1015.1848,
+        "load_s": 1.5299,
+        "min_free_gb": 9.5701,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 1.66
+    },
+    {
+      "run_id": "20260402T212109Z-hypura-4096-threads-batch-14",
+      "backend": "hypura",
+      "label": "Prompt-side worker tuning",
+      "phase": "threads_batch",
+      "change": "Settled on the stronger prompt-side worker count.",
+      "description": "hypura 4096 threads-batch 14",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 56.6721,
+        "prompt_tok_s": 61.0621,
+        "ttft_ms": 1131.2664,
+        "load_s": 2.4459,
+        "min_free_gb": 9.2393,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 2.23
+    },
+    {
+      "run_id": "20260402T212130Z-hypura-4096-ubatch-256",
+      "backend": "hypura",
+      "label": "Micro-batch tuning",
+      "phase": "ubatch",
+      "change": "Kept the faster batch shape while staying within the safety limits.",
+      "description": "hypura 4096 ubatch 256",
+      "status": "keep",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 56.9525,
+        "prompt_tok_s": 64.796,
+        "ttft_ms": 1067.0067,
+        "load_s": 2.377,
+        "min_free_gb": 9.3311,
+        "swap_delta_gb": 0.0003
+      },
+      "delta_vs_previous_pct": 0.49
+    },
+    {
+      "run_id": "20260402T212311Z-hypura-4096-combo-prompt-stable",
+      "backend": "hypura",
+      "label": "Validated Hypura winner",
+      "phase": "validated_winner",
+      "change": "Locked the adopted three-pass winner.",
+      "description": "hypura 4096 combo prompt stable",
+      "status": "keep",
+      "track": "speed",
+      "adopted": true,
+      "validated": true,
+      "exploratory_only": false,
+      "evidence": "results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable.json",
+      "metrics": {
+        "gen_tok_s": 57.0126,
+        "prompt_tok_s": 67.441,
+        "ttft_ms": 1025.7408,
+        "load_s": 1.9716,
+        "min_free_gb": 9.3331,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 0.11
+    },
+    {
+      "run_id": "20260402T214323Z-hypura-4096-tb13-probe",
+      "backend": "hypura",
+      "label": "Exploratory peak",
+      "phase": "exploratory_peak",
+      "change": "A one-pass probe beat the adopted winner, but it did not survive follow-up stability checks.",
+      "description": "hypura 4096 tb13 probe",
+      "status": "discard",
+      "track": "speed",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": true,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 57.9394,
+        "prompt_tok_s": 60.1696,
+        "ttft_ms": 1147.3983,
+        "load_s": 3.3927,
+        "min_free_gb": 8.0315,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 1.63
+    }
+  ],
+  "flashmoe_progress": [
+    {
+      "run_id": "20260402T233718Z-flashmoe-slot-bank-16-smoke",
+      "backend": "flashmoe",
+      "label": "First usable Flash-MoE smoke run",
+      "phase": "smoke",
+      "change": "Proved the Gemma 4 Flash-MoE route could answer correctly on this machine.",
+      "description": "flashmoe slot-bank 16 smoke",
+      "status": "discard",
+      "track": "memory",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": false,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 12.2,
+        "prompt_tok_s": 7.6,
+        "ttft_ms": 81.9672,
+        "load_s": 21.5222,
+        "min_free_gb": 8.2795,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": null
+    },
+    {
+      "run_id": "20260402T234127Z-flashmoe-bank-ngl-moe-slot-bank-",
+      "backend": "flashmoe",
+      "label": "Bank and GPU sweep winner",
+      "phase": "bank_gpu_sweep",
+      "change": "The best one-pass sweep favored slot-bank 16 with the dense and shared path left on the CPU.",
+      "description": "flashmoe-bank-ngl: moe_slot_bank=16, gpu_layers=0 :: flashmoe slot-bank 16 ngl99",
+      "status": "discard",
+      "track": "memory",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": true,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 14.6,
+        "prompt_tok_s": 11.4,
+        "ttft_ms": 68.4932,
+        "load_s": 18.0281,
+        "min_free_gb": 9.4071,
+        "swap_delta_gb": 0.0141
+      },
+      "delta_vs_previous_pct": 19.67
+    },
+    {
+      "run_id": "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-",
+      "backend": "flashmoe",
+      "label": "Validated Flash-MoE CLI fallback",
+      "phase": "validated_cli",
+      "change": "Locked the three-pass one-shot alternate.",
+      "description": "flashmoe slot-bank 16 cpu dense stable",
+      "status": "discard",
+      "track": "memory",
+      "adopted": true,
+      "validated": true,
+      "exploratory_only": false,
+      "evidence": "results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-.json",
+      "metrics": {
+        "gen_tok_s": 13.9,
+        "prompt_tok_s": 10.9,
+        "ttft_ms": 71.9424,
+        "load_s": 18.6859,
+        "min_free_gb": 8.8095,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": -4.79
+    },
+    {
+      "run_id": "20260403T001746Z-flashmoe-batch-batch-size-2-ubat",
+      "backend": "flashmoe",
+      "label": "Exploratory CLI peak",
+      "phase": "cli_peak",
+      "change": "Small batch tuning briefly nudged the CLI path higher, but it stayed an exploratory point.",
+      "description": "flashmoe-batch: batch_size=2, ubatch_size=2 :: flashmoe slot-bank 16 cpu dense t8 stable",
+      "status": "discard",
+      "track": "memory",
+      "adopted": false,
+      "validated": false,
+      "exploratory_only": true,
+      "evidence": "results.tsv",
+      "metrics": {
+        "gen_tok_s": 15.1,
+        "prompt_tok_s": 11.9,
+        "ttft_ms": 66.2252,
+        "load_s": 18.5021,
+        "min_free_gb": 9.8955,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 8.63
+    },
+    {
+      "run_id": "20260403T004039Z-flashmoe-server-slot-bank-16-cpu",
+      "backend": "flashmoe_server",
+      "label": "Resident-server architecture shift",
+      "phase": "resident_server",
+      "change": "Keeping Flash-MoE hot removed most of the one-shot startup penalty and became the practical low-memory path.",
+      "description": "flashmoe server slot-bank 16 cpu dense stable",
+      "status": "discard",
+      "track": "memory",
+      "adopted": true,
+      "validated": true,
+      "exploratory_only": false,
+      "evidence": "results/runs/20260403T004039Z-flashmoe-server-slot-bank-16-cpu.json",
+      "metrics": {
+        "gen_tok_s": 19.1107,
+        "prompt_tok_s": 22.3626,
+        "ttft_ms": 3048.1582,
+        "load_s": 9.1907,
+        "min_free_gb": 10.7039,
+        "swap_delta_gb": 0.0
+      },
+      "delta_vs_previous_pct": 26.56
+    }
+  ],
+  "comparison_proof": {
+    "hypura_vs_llama_cpp_baseline": {
+      "lhs": "Validated Hypura winner",
+      "rhs": "Usable llama.cpp baseline",
+      "generation_speed_ratio": 2.0,
+      "generation_speed_gain_pct": 100.04,
+      "load_time_faster_x": 16.38,
+      "free_memory_delta_gb": 5.18,
+      "swap_growth_reduction_gb": 0.7
+    },
+    "hypura_vs_flashmoe_cli": {
+      "lhs": "Validated Hypura winner",
+      "rhs": "Validated Flash-MoE CLI fallback",
+      "generation_speed_ratio": 4.1,
+      "prompt_speed_ratio": 6.19,
+      "load_time_faster_x": 9.48,
+      "free_memory_delta_gb": 0.52
+    },
+    "flashmoe_server_vs_flashmoe_cli": {
+      "lhs": "Validated Flash-MoE resident server",
+      "rhs": "Validated Flash-MoE CLI fallback",
+      "generation_speed_ratio": 1.37,
+      "prompt_speed_ratio": 2.05,
+      "load_time_faster_x": 2.03,
+      "free_memory_delta_gb": 1.89
+    },
+    "hypura_resident_vs_flashmoe_resident": {
+      "lhs": "Hypura resident server",
+      "rhs": "Flash-MoE resident server",
+      "generation_speed_ratio": 2.98,
+      "prompt_speed_ratio": 3.02,
+      "resident_memory_ratio": 2.9,
+      "similar_prompt_wall_time_flashmoe_advantage_x": 1.48,
+      "exact_repeat_wall_time_hypura_advantage_x": 1.77
+    }
+  },
+  "resident_probe_comparison": {
+    "hypura": {
+      "updated_at": "2026-04-03T01:01:57Z",
+      "resident_rss_gb": 12.5079,
+      "similar_short_prompts": {
+        "median_elapsed_s": 4.89,
+        "median_prompt_tok_s": 17.11,
+        "median_gen_tok_s": 54.04
+      },
+      "exact_repeat": {
+        "median_elapsed_s": 1.01,
+        "median_prompt_tok_s": 47.5,
+        "median_gen_tok_s": 93.04
+      }
+    },
+    "flashmoe_server": {
+      "updated_at": "2026-04-03T01:02:56Z",
+      "resident_rss_gb": 4.3187,
+      "similar_short_prompts": {
+        "median_elapsed_s": 3.298,
+        "median_prompt_tok_s": 14.94,
+        "median_gen_tok_s": 28.94
+      },
+      "exact_repeat": {
+        "median_elapsed_s": 1.789,
+        "median_prompt_tok_s": 24.42,
+        "median_gen_tok_s": 35.81
+      }
+    }
+  },
+  "notes": {
+    "validated_winners": {
+      "hypura": {
+        "run_id": "20260402T212311Z-hypura-4096-combo-prompt-stable",
+        "measured_runs": 3,
+        "gen_tok_s": 57.0126
+      },
+      "flashmoe_cli": {
+        "run_id": "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-",
+        "measured_runs": 3,
+        "gen_tok_s": 13.9
+      },
+      "flashmoe_server": {
+        "run_id": "20260403T004039Z-flashmoe-server-slot-bank-16-cpu",
+        "measured_runs": 3,
+        "gen_tok_s": 19.1107
+      }
+    },
+    "exploratory_peak": {
+      "run_id": "20260402T214323Z-hypura-4096-tb13-probe",
+      "gen_tok_s": 57.9394,
+      "delta_vs_validated_hypura_pct": 1.63,
+      "reason_not_adopted": "The higher one-pass Hypura probe never became the official winner because the follow-up repeat and current-state passes were inconsistent."
+    },
+    "supporting_files": [
+      "results.tsv",
+      "results/best.json",
+      "results/best_flashmoe.json",
+      "results/best_flashmoe_server.json",
+      "results/hypura_server_probe_latest.json",
+      "results/flashmoe_server_probe_latest.json",
+      "results/runtime_comparison.md"
+    ],
+    "row_count": 132
+  }
+}

@@ -57,6 +57,7 @@
     "progress.png",
     "progress.py",
     "pyproject.toml",
+    "readme_research_summary.py",
     "refresh_current_state.py",
     "release_readiness_check.py",
     "restore_best.py",
@@ -88,6 +89,7 @@
     "flashmoe_server_probe_latest.json",
     "hypura_server_probe_latest.json",
     "machine_profile.json",
+    "readme_research_summary.json",
     "runtime_comparison.md"
   ],
   "results_dirs": [

@@ -226,6 +226,14 @@ To regenerate the plain side-by-side runtime summary:
 uv run runtime_comparison.py
 ```
 
+To regenerate the compact chart-data artifact used by the root README:
+
+```bash
+uv run readme_research_summary.py
+```
+
+That writes `results/readme_research_summary.json`, which keeps the README charts tied to the saved benchmark ledger instead of hand-maintained numbers.
+
 If you want one front door for both runtimes, use:
 
 ```bash
