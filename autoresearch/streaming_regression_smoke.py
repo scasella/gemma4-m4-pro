@@ -7,6 +7,7 @@ import selectors
 import socket
 import subprocess
 import sys
+import tempfile
 import textwrap
 import time
 from pathlib import Path
@@ -23,9 +24,11 @@ import json
 import sys
 import time
 from http.server import BaseHTTPRequestHandler, HTTPServer
+from pathlib import Path
 
 kind = sys.argv[1]
 port = int(sys.argv[2])
+ready_path = Path(sys.argv[3])
 
 
 class Handler(BaseHTTPRequestHandler):
@@ -106,7 +109,7 @@ class Handler(BaseHTTPRequestHandler):
 
 
 server = HTTPServer(("127.0.0.1", port), Handler)
-print(server.server_port, flush=True)
+ready_path.write_text(str(server.server_port), encoding="utf-8")
 server.serve_forever()
 """
 
@@ -123,26 +126,20 @@ def process_output(process: subprocess.Popen[str]) -> tuple[str, str]:
     return stdout, stderr
 
 
-def wait_for_server_port(process: subprocess.Popen[str], timeout_s: float = 15.0) -> int:
-    if process.stdout is None:
-        raise RuntimeError("Fake server process has no stdout pipe.")
-    selector = selectors.DefaultSelector()
-    selector.register(process.stdout, selectors.EVENT_READ)
+def wait_for_server_port(ready_path: Path, process: subprocess.Popen[str], timeout_s: float = 15.0) -> int:
     deadline = time.time() + timeout_s
-    try:
-        while time.time() < deadline:
-            if process.poll() is not None:
-                stdout, stderr = process_output(process)
-                raise RuntimeError(
-                    "Fake server exited before reporting its port."
-                    f" stdout={stdout!r} stderr={stderr!r}"
-                )
-            if selector.select(timeout=0.1):
-                line = process.stdout.readline().strip()
-                if line:
-                    return int(line)
-    finally:
-        selector.close()
+    while time.time() < deadline:
+        if ready_path.exists():
+            line = ready_path.read_text(encoding="utf-8").strip()
+            if line:
+                return int(line)
+        if process.poll() is not None:
+            stdout, stderr = process_output(process)
+            raise RuntimeError(
+                "Fake server exited before reporting its port."
+                f" stdout={stdout!r} stderr={stderr!r}"
+            )
+        time.sleep(0.05)
     stdout, stderr = process_output(process)
     raise RuntimeError(
         "Timed out waiting for fake server startup."
@@ -172,20 +169,23 @@ def wait_for_port(port: int, process: subprocess.Popen[str], timeout_s: float = 
 
 
 def start_fake_server(kind: str) -> tuple[subprocess.Popen[str], int]:
+    with tempfile.NamedTemporaryFile(prefix="fake-server-ready-", delete=False) as handle:
+        ready_path = Path(handle.name)
     process = subprocess.Popen(
-        [sys.executable, "-c", FAKE_SERVER_SOURCE, kind, "0"],
-        stdout=subprocess.PIPE,
+        [sys.executable, "-c", FAKE_SERVER_SOURCE, kind, "0", str(ready_path)],
+        stdout=subprocess.DEVNULL,
         stderr=subprocess.PIPE,
         text=True,
-        bufsize=1,
     )
     try:
-        port = wait_for_server_port(process)
+        port = wait_for_server_port(ready_path, process)
         wait_for_port(port, process)
         return process, port
     except Exception:
         stop_process(process)
         raise
+    finally:
+        ready_path.unlink(missing_ok=True)
 
 
 def stop_process(process: subprocess.Popen[str] | None) -> None:
