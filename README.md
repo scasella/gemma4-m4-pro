@@ -1,4 +1,4 @@
-# Gemma 4 on a 24 GB M4 Pro
+# Gemma 4 26B A4B Optimizations on M4 Pro MacBook Pro with 24GB of RAM: 28.50 -> 57.01 tok/s, 19.11 tok/s with 4.32GB RAM 
 
 [![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
 
