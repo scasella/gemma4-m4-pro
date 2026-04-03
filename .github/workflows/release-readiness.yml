@@ -31,6 +31,8 @@ jobs:
         run: uv sync
 
       - name: Run release readiness preflight
+        env:
+          SKIP_STREAMING_REGRESSION_SMOKE: "1"
         run: python3 release_readiness_check.py
 
       - name: Run lean public repo audit

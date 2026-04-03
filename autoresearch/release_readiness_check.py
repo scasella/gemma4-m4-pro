@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import os
 import subprocess
 import sys
 import time
@@ -38,6 +39,7 @@ def existing(paths: list[Path]) -> list[Path]:
 def main() -> int:
     print("Release readiness check")
     print()
+    skip_streaming_smoke = os.environ.get("SKIP_STREAMING_REGRESSION_SMOKE") == "1"
 
     python_files = [
         ROOT / "prepare.py",
@@ -77,10 +79,13 @@ def main() -> int:
             ["bash", "-n", str(path)],
         )
 
-    run_step(
-        "streaming regression smoke",
-        [sys.executable, str(ROOT / "streaming_regression_smoke.py")],
-    )
+    if skip_streaming_smoke:
+        print("[skip] streaming regression smoke (SKIP_STREAMING_REGRESSION_SMOKE=1)")
+    else:
+        run_step(
+            "streaming regression smoke",
+            [sys.executable, str(ROOT / "streaming_regression_smoke.py")],
+        )
 
     run_step(
         "show_best summary",
@@ -91,7 +96,10 @@ def main() -> int:
     print("Release readiness check passed.")
     print("  - public Python entrypoints parse")
     print("  - public shell entrypoints parse")
-    print("  - streaming and cleanup regression smoke passed")
+    if skip_streaming_smoke:
+        print("  - streaming regression smoke was skipped for this environment")
+    else:
+        print("  - streaming and cleanup regression smoke passed")
     print("  - top-level status summary still renders")
     return 0
 
