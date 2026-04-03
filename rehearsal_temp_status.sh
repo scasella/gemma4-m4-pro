@@ -57,7 +57,6 @@ from pathlib import Path
 summary_path = Path(sys.argv[1])
 clean_mode = sys.argv[2]
 current_repo = Path.cwd().resolve()
-meta_name = '.gemma_publish_rehearsal_meta.json'
 paths = [
     path for path in Path('/tmp').glob('gemma-publish-rehearsal.*')
     if path.is_dir() and path.resolve() != current_repo
@@ -66,7 +65,7 @@ entries = []
 for path in paths:
     size_bytes = sum(file.stat().st_size for file in path.rglob('*') if file.is_file())
     stat = path.stat()
-    meta_path = path / meta_name
+    meta_path = Path(f"{path}.meta.json")
     metadata = None
     if meta_path.exists():
         try:
@@ -77,6 +76,7 @@ for path in paths:
     final_state = (metadata or {}).get('final_state', 'unknown')
     entries.append({
         'path': str(path),
+        'meta_path': str(meta_path),
         'name': path.name,
         'size_bytes': size_bytes,
         'size_mb': round(size_bytes / (1024 * 1024), 2),
@@ -113,6 +113,9 @@ if clean_mode != 'none':
             kept_entries.append(entry)
             continue
         shutil.rmtree(entry['path'])
+        meta_path = Path(entry['meta_path'])
+        if meta_path.exists():
+            meta_path.unlink()
         removed_count += 1
         removed_total_size_bytes += entry['size_bytes']
         reason = entry.get('keep_reason', 'unknown')
