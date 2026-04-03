@@ -1,7 +1,8 @@
-# Gemma 4 26B A4B Optimizations on M4 Pro MacBook Pro with 24GB of RAM: 28.50 -> 57.01 tok/s, 19.11 tok/s with 4.32GB RAM 
+# Gemma 4 26B A4B on a 24 GB M4 Pro
+
+<p align="center"><strong>28.50 → 57.01 tok/s</strong> on tuned Hypura · <strong>19.11 tok/s</strong> on the low-memory Flash-MoE resident server · <strong>4.32 GB</strong> warm memory footprint for the lightweight path</p>
 
 [![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
-
 
 This repo started as a local bring-up effort for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro. The main result is two validated winners from that research: a tuned Hypura path for raw speed and a resident Flash-MoE path for lower memory pressure.
 
