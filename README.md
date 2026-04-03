@@ -1,11 +1,10 @@
 # Gemma 4 26B A4B on a 24 GB M4 Pro
 
-[![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
-
-
 <p align="center"><strong>28.50 → 57.01 tok/s</strong> on tuned Hypura · <strong>19.11 tok/s</strong> on the low-memory Flash-MoE resident server · <strong>4.32 GB</strong> warm memory footprint for the lightweight path</p>
 
-This repo started as a local bring-up effort for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro. The main result is two validated winners from that research: a tuned Hypura path for raw speed and a resident Flash-MoE path for lower memory pressure.
+[![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
+
+This repo started as a local bring-up effort for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro. The main result is two validated winners from that research: a tuned [Hypura](https://github.com/t8/hypura) path for raw speed and a resident [Flash-MoE](https://github.com/danveloper/flash-moe) path for lower memory pressure.
 
 This public repo keeps the research outcome, the curated measurements, and the front-door commands without bundling the local-only model files and sidecars from the private workspace.
 
@@ -15,13 +14,13 @@ All numbers below were measured during the original 24 GB M4 Pro research runs w
 
 | Runtime | How it is used | Generation speed | Prompt speed | First answer | Load time | Lowest free memory | Swap growth | Warm resident memory |
 | --- | --- | ---: | ---: | ---: | ---: | ---: | ---: | ---: |
-| Hypura | tuned resident server | 57.01 tok/s | 67.44 tok/s | 1025.7 ms | 1.97 s | 9.33 GB | 0.00 GB | about 12.51 GB |
-| Flash-MoE | one-shot CLI fallback | 13.90 tok/s | 10.90 tok/s | 71.9 ms | 18.69 s | 8.81 GB | 0.00 GB | n/a |
-| Flash-MoE | resident server | 19.11 tok/s | 22.36 tok/s | 3048.2 ms | 9.19 s | 10.70 GB | 0.00 GB | about 4.32 GB |
+| [Hypura](https://github.com/t8/hypura) | tuned resident server | 57.01 tok/s | 67.44 tok/s | 1025.7 ms | 1.97 s | 9.33 GB | 0.00 GB | about 12.51 GB |
+| [Flash-MoE](https://github.com/danveloper/flash-moe) | one-shot CLI fallback | 13.90 tok/s | 10.90 tok/s | 71.9 ms | 18.69 s | 8.81 GB | 0.00 GB | n/a |
+| [Flash-MoE](https://github.com/danveloper/flash-moe) | resident server | 19.11 tok/s | 22.36 tok/s | 3048.2 ms | 9.19 s | 10.70 GB | 0.00 GB | about 4.32 GB |
 
 ## What improved during the research
 
-The charts below separate adopted winners from exploratory-only spikes. The fast Hypura path has one one-pass peak above the adopted winner, but the saved export stays on the three-pass validated result because the follow-up reruns were less stable.
+The charts below separate adopted winners from exploratory-only spikes. The fast [Hypura](https://github.com/t8/hypura) path has one one-pass peak above the adopted winner, but the saved export stays on the three-pass validated result because the follow-up reruns were less stable.
 
 ### Overall frontier
 
@@ -34,7 +33,7 @@ flowchart LR
   E --> F["Flash-MoE resident server<br/>19.11 tok/s<br/>4.32 GB warm RSS"]
 ```
 
-### Hypura optimization ladder
+### [Hypura](https://github.com/t8/hypura) optimization ladder
 
 ```mermaid
 flowchart LR
@@ -59,7 +58,7 @@ flowchart LR
 
 The exploratory `threads_batch=13` probe reached `57.94 tok/s`, about `1.6%` above the adopted winner, but it did not become the exported best because the repeat and current-state reruns were inconsistent.
 
-### Flash-MoE optimization ladder
+### [Flash-MoE](https://github.com/danveloper/flash-moe) optimization ladder
 
 ```mermaid
 flowchart LR
@@ -86,10 +85,10 @@ These comparisons are all from the saved measurements on this exact 24 GB M4 Pro
 
 | Comparison | Measured advantage | Why it wins |
 | --- | --- | --- |
-| Tuned Hypura vs usable `llama.cpp` baseline | `2.00x` generation speed, `16.38x` faster load, `+5.18 GB` more free memory, and `0.70 GB` less swap growth | The final fast path is not just quicker. It is also much safer to leave running on this laptop. |
-| Tuned Hypura vs validated Flash-MoE CLI | `4.10x` generation speed, `6.19x` prompt speed, and `9.48x` faster load | Hypura is the right default when raw speed matters most. |
-| Flash-MoE resident vs Flash-MoE CLI | `1.37x` generation speed, `2.05x` prompt speed, `2.03x` faster load, and `+1.89 GB` more free memory | The resident-server design is why Flash-MoE became a practical low-memory alternate instead of just a one-shot fallback. |
-| Hypura resident vs Flash-MoE resident | `2.98x` generation speed and `3.02x` prompt speed for Hypura, but Flash-MoE uses only about `4.32 GB` warm RSS versus Hypura’s `12.51 GB` | The project beats single-path setups because it keeps both winners: one for speed and one for memory pressure. |
+| Tuned [Hypura](https://github.com/t8/hypura) vs usable `llama.cpp` baseline | `2.00x` generation speed, `16.38x` faster load, `+5.18 GB` more free memory, and `0.70 GB` less swap growth | The final fast path is not just quicker. It is also much safer to leave running on this laptop. |
+| Tuned [Hypura](https://github.com/t8/hypura) vs validated [Flash-MoE](https://github.com/danveloper/flash-moe) CLI | `4.10x` generation speed, `6.19x` prompt speed, and `9.48x` faster load | Hypura is the right default when raw speed matters most. |
+| [Flash-MoE](https://github.com/danveloper/flash-moe) resident vs [Flash-MoE](https://github.com/danveloper/flash-moe) CLI | `1.37x` generation speed, `2.05x` prompt speed, `2.03x` faster load, and `+1.89 GB` more free memory | The resident-server design is why Flash-MoE became a practical low-memory alternate instead of just a one-shot fallback. |
+| [Hypura](https://github.com/t8/hypura) resident vs [Flash-MoE](https://github.com/danveloper/flash-moe) resident | `2.98x` generation speed and `3.02x` prompt speed for Hypura, but Flash-MoE uses only about `4.32 GB` warm RSS versus Hypura’s `12.51 GB` | The project beats single-path setups because it keeps both winners: one for speed and one for memory pressure. |
 
 That is the real advantage of this implementation over the other paths in the repo. It does not force one compromise. The front-door commands can use the fastest validated runtime when the machine has room, and they can fall back to the lighter resident-server path when keeping memory free matters more.
 
@@ -98,7 +97,7 @@ That is the real advantage of this implementation over the other paths in the re
 If you want to use the model:
 
 - everyday prompt and chat commands: [`autoresearch/README.md`](./autoresearch/README.md)
-- tuned Hypura server path: [`hypura-main/GEMMA4_M4_PRO.md`](./hypura-main/GEMMA4_M4_PRO.md)
+- tuned [Hypura](https://github.com/t8/hypura) server path: [`hypura-main/GEMMA4_M4_PRO.md`](./hypura-main/GEMMA4_M4_PRO.md)
 
 If you want to understand the research state:
 
@@ -119,8 +118,8 @@ If you want to prepare a release or update this public repo:
 ## How This Repo Is Organized
 
 - [`autoresearch/`](./autoresearch): the main benchmark loop, user-facing prompt/chat commands, status tools, regression smoke tests, and release preflight
-- [`hypura-main/`](./hypura-main): the tuned fast runtime path and its launcher/docs
-- `anemll-flash-llama.cpp-gemma4/`: optional external checkout for the lower-memory Flash-MoE path
+- [`hypura-main/`](./hypura-main): the tuned fast runtime path and its launcher/docs, built around [Hypura](https://github.com/t8/hypura)
+- `anemll-flash-llama.cpp-gemma4/`: optional external checkout for the lower-memory [Flash-MoE](https://github.com/danveloper/flash-moe) path
 - [`models/`](./models): local model files used by the runtime and benchmark tools
 - [`autoresearch/results/runtime_comparison.md`](./autoresearch/results/runtime_comparison.md): curated benchmark summary
 - [`autoresearch/results/curated_results_manifest.json`](./autoresearch/results/curated_results_manifest.json): exact saved result files intentionally kept in the lean public repo
@@ -171,8 +170,8 @@ python3 release_readiness_check.py
 
 Two runtime styles are available:
 
-- fastest overall: Hypura
-- lower-memory alternate: Flash-MoE
+- fastest overall: [Hypura](https://github.com/t8/hypura)
+- lower-memory alternate: [Flash-MoE](https://github.com/danveloper/flash-moe)
 
 The benchmark and status tooling for those live under [`autoresearch/`](./autoresearch).
 
@@ -182,15 +181,15 @@ This GitHub release repo is intentionally lean.
 
 It includes:
 
-- the tuned Hypura source tree used by the fast path
+- the tuned [Hypura](https://github.com/t8/hypura) source tree used by the fast path
 - the benchmark and control scripts
 - curated benchmark summaries and the small set of run artifacts needed to support them
 
 It does **not** include:
 
 - local model files
-- the huge Flash-MoE sidecar data
+- the huge [Flash-MoE](https://github.com/danveloper/flash-moe) sidecar data
 - the full raw run-log archive
-- the optional Flash-MoE source checkout
+- the optional [Flash-MoE](https://github.com/danveloper/flash-moe) source checkout
 
-If you want the lower-memory Flash-MoE path in this lean repo, follow [`SETUP_EXTERNALS.md`](./docs/SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.
+If you want the lower-memory [Flash-MoE](https://github.com/danveloper/flash-moe) path in this lean repo, follow [`SETUP_EXTERNALS.md`](./docs/SETUP_EXTERNALS.md) and clone the optional runtime into the expected local path.
