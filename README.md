@@ -1,5 +1,8 @@
 # Gemma 4 on a 24 GB M4 Pro
 
+[![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
+
+
 This repo is a practical local-research and runtime toolkit for running `gemma-4-26B-A4B-it` on a 24 GB M4 Pro MacBook Pro.
 
 It includes:
@@ -149,4 +152,3 @@ Release preflight:
 cd autoresearch
 python3 release_readiness_check.py
 ```
-
