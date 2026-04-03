@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-04-02T20:22:25.283299+00:00",
+  "hostname": "MacBook-Pro.local",
+  "platform": "macOS-26.4-arm64-arm-64bit",
+  "os_version": "26.4",
+  "machine": "arm64",
+  "total_memory_bytes": 25769803776,
+  "total_memory_gb": 24.0,
+  "performance_cores": 10,
+  "efficiency_cores": 4,
+  "model_path": "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+  "llama_cpp": {
+    "name": "llama.cpp",
+    "command": [
+      "./llama-baseline-build/bin/llama-cli"
+    ],
+    "path": "./llama-baseline-build/bin/llama-cli"
+  },
+  "hypura": {
+    "name": "hypura",
+    "command": [
+      "./hypura-main/target/release/hypura"
+    ],
+    "path": "./hypura-main/target/release/hypura"
+  }
+}

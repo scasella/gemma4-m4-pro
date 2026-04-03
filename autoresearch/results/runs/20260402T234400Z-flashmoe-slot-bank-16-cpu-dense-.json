@@ -1,0 +1,1168 @@
+{
+  "run_id": "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-",
+  "started_at": "2026-04-02T23:44:00.797719+00:00",
+  "finished_at": "2026-04-02T23:46:13.177486+00:00",
+  "candidate_path": "candidates/flashmoe-slot-bank-16.yaml",
+  "overrides": [
+    "description=\"flashmoe slot-bank 16 cpu dense stable\"",
+    "backend_config.gpu_layers=0"
+  ],
+  "candidate": {
+    "description": "flashmoe slot-bank 16 cpu dense stable",
+    "backend": "flashmoe",
+    "model_path": "../models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+    "context": 4096,
+    "max_tokens": 64,
+    "correctness_max_tokens": 16,
+    "warmup_runs": 1,
+    "measured_runs": 3,
+    "min_free_gb": 4.0,
+    "max_swap_delta_gb": 0.25,
+    "sample_interval_s": 1.0,
+    "timeout_s": 1800,
+    "backend_config": {
+      "sidecar_dir": "../results/flashmoe_full_sidecar",
+      "moe_mode": "slot-bank",
+      "moe_slot_bank": 16,
+      "gpu_layers": 0,
+      "threads": 10,
+      "threads_batch": 10,
+      "batch_size": 1,
+      "ubatch_size": 1
+    }
+  },
+  "backend": "flashmoe",
+  "status": "discard",
+  "summary": {
+    "score": 13.9,
+    "gen_tok_s": 13.9,
+    "prompt_tok_s": 10.9,
+    "ttft_ms": 71.94244604316546,
+    "load_s": 18.685867548574343,
+    "min_free_gb": 8.809494018554688,
+    "swap_delta_gb": 0.0
+  },
+  "constraints": {
+    "min_free_gb": 4.0,
+    "max_swap_delta_gb": 0.25,
+    "timeout_s": 1800,
+    "sample_interval_s": 1.0
+  },
+  "phase_records": [
+    {
+      "phase": "correctness-sum_digit",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 7.0,
+        "gen_tok_s": 22.2,
+        "prompt_eval_s": 0.0,
+        "generation_s": 0.7207207207207208,
+        "wall_s": 14.799726124998415,
+        "load_s": 14.079005404277694,
+        "ttft_ms": 45.04504504504505,
+        "tokens_generated": 16
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "16",
+          "-p",
+          "Answer with one digit only: what is 2+2?",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--correctness-sum-digit.log",
+        "wall_s": 14.799726124998415,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.458206176757812,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.005 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-split-glu  = off\n  metal-disable-mm = off\n  metal-disable-mm-id = off\n  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Answer with one digit only: what is 2+2?\n\n4llama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=840 refs=6520 uniq=6520 hit=61.4% miss/call=3.00 bytes=9.28 GiB topk=0.238 ms resolve=0.398 ms install=3373.314 ms source=3083.012 ms upload=0.000 ms slotwr=0.770 ms trace=0.035 ms other=0.887 ms pread=5034 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=1811.408 ms / 5.23 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=1560.619 ms / 4.05 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=2037\nlog_runtime_summary: Flash-MoE layer=24 calls=28 uniq=224 hit=58.0% miss=94 cold=16 evict=78 peak=16 bytes=322.12 MiB install=203.824 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=28 uniq=224 hit=54.9% miss=101 cold=16 evict=85 peak=16 bytes=417.71 MiB install=189.807 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=28 uniq=224 hit=41.1% miss=132 cold=16 evict=116 peak=16 bytes=545.92 MiB install=188.977 ms\nlog_runtime_summary: Flash-MoE layer=2 calls=28 uniq=224 hit=54.5% miss=102 cold=16 evict=86 peak=16 bytes=421.85 MiB install=157.884 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=28 uniq=224 hit=59.8% miss=90 cold=16 evict=74 peak=16 bytes=372.22 MiB install=131.877 ms\nlog_runtime_summary: Flash-MoE layer=1 calls=28 uniq=224 hit=42.4% miss=129 cold=16 evict=113 peak=16 bytes=533.51 MiB install=129.750 ms\nlog_runtime_summary: Flash-MoE layer=8 calls=28 uniq=224 hit=57.6% miss=95 cold=16 evict=79 peak=16 bytes=392.90 MiB install=128.963 ms\nlog_runtime_summary: Flash-MoE layer=26 calls=28 uniq=224 hit=56.2% miss=98 cold=16 evict=82 peak=16 bytes=405.30 MiB install=128.513 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 7.0 t/s | Generation: 22.2 t/s ]\n\nExiting...",
+          "line_count": 93
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.0013576249912148342,
+            "free_gb": 13.622039794921875,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 1.0810889999993378,
+            "free_gb": 12.392318725585938,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 2.1449063749896595,
+            "free_gb": 12.442428588867188,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 3.2303114169917535,
+            "free_gb": 12.504379272460938,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 4.291848374996334,
+            "free_gb": 12.650955200195312,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 5.361070333994576,
+            "free_gb": 12.727584838867188,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 6.436950541989063,
+            "free_gb": 12.881973266601562,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 7.509367916994961,
+            "free_gb": 12.976364135742188,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 8.561140999998315,
+            "free_gb": 12.154541015625,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 9.642530333992909,
+            "free_gb": 11.019012451171875,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 10.702248041998246,
+            "free_gb": 10.026092529296875,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 11.777108416994452,
+            "free_gb": 9.458206176757812,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 12.844654333996004,
+            "free_gb": 9.5267333984375,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 13.925036749991705,
+            "free_gb": 9.516082763671875,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 14.799726124998415,
+            "free_gb": 13.969345092773438,
+            "swap_used_gb": 1.676025390625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "correctness-capital_paris",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 8.6,
+        "gen_tok_s": 19.9,
+        "prompt_eval_s": 0.0,
+        "generation_s": 0.8040201005025126,
+        "wall_s": 14.784554792000563,
+        "load_s": 13.98053469149805,
+        "ttft_ms": 50.25125628140704,
+        "tokens_generated": 16
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "16",
+          "-p",
+          "Answer with one lowercase word only: what is the capital of France?",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--correctness-capital-paris.log",
+        "wall_s": 14.784554792000563,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 10.35198974609375,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.006 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-split-glu  = off\n  metal-disable-mm = off\n  metal-disable-mm-id = off\n  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Answer with one lowercase word only: what is the capital of France?\n\nparisllama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=870 refs=6752 uniq=6752 hit=63.5% miss/call=2.83 bytes=9.08 GiB topk=0.216 ms resolve=0.367 ms install=3015.679 ms source=2805.551 ms upload=0.000 ms slotwr=0.799 ms trace=0.034 ms other=0.840 ms pread=4930 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=1696.136 ms / 5.12 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=1318.194 ms / 3.96 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=1985\nlog_runtime_summary: Flash-MoE layer=8 calls=29 uniq=232 hit=55.6% miss=103 cold=16 evict=87 peak=16 bytes=425.98 MiB install=158.289 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=29 uniq=232 hit=62.9% miss=86 cold=16 evict=70 peak=16 bytes=355.67 MiB install=145.213 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=29 uniq=232 hit=40.1% miss=139 cold=16 evict=123 peak=16 bytes=574.87 MiB install=143.939 ms\nlog_runtime_summary: Flash-MoE layer=2 calls=29 uniq=232 hit=56.9% miss=100 cold=16 evict=84 peak=16 bytes=413.57 MiB install=142.153 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=29 uniq=232 hit=59.5% miss=94 cold=16 evict=78 peak=16 bytes=388.76 MiB install=140.393 ms\nlog_runtime_summary: Flash-MoE layer=1 calls=29 uniq=232 hit=42.7% miss=133 cold=16 evict=117 peak=16 bytes=550.05 MiB install=132.069 ms\nlog_runtime_summary: Flash-MoE layer=5 calls=29 uniq=232 hit=50.0% miss=116 cold=16 evict=100 peak=16 bytes=479.75 MiB install=123.528 ms\nlog_runtime_summary: Flash-MoE layer=26 calls=29 uniq=232 hit=63.8% miss=84 cold=16 evict=68 peak=16 bytes=347.40 MiB install=123.007 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 8.6 t/s | Generation: 19.9 t/s ]\n\nExiting...",
+          "line_count": 93
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.0019540420034900308,
+            "free_gb": 13.968780517578125,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 1.058267500004149,
+            "free_gb": 15.467910766601562,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 2.1361625839927,
+            "free_gb": 15.552566528320312,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 3.201548416996957,
+            "free_gb": 15.684524536132812,
+            "swap_used_gb": 1.676025390625
+          },
+          {
+            "elapsed_s": 4.268863167002564,
+            "free_gb": 15.848312377929688,
+            "swap_used_gb": 1.668212890625
+          },
+          {
+            "elapsed_s": 5.3100296670018,
+            "free_gb": 15.865768432617188,
+            "swap_used_gb": 1.660400390625
+          },
+          {
+            "elapsed_s": 6.353431334006018,
+            "free_gb": 15.72259521484375,
+            "swap_used_gb": 1.660400390625
+          },
+          {
+            "elapsed_s": 7.384414750005817,
+            "free_gb": 15.792404174804688,
+            "swap_used_gb": 1.660400390625
+          },
+          {
+            "elapsed_s": 8.433618124996428,
+            "free_gb": 15.249176025390625,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 9.47513383399928,
+            "free_gb": 14.5400390625,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 10.516742666994105,
+            "free_gb": 13.09918212890625,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 11.55752233399835,
+            "free_gb": 10.885498046875,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 12.602853624994168,
+            "free_gb": 10.489501953125,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 13.6416772090015,
+            "free_gb": 10.35198974609375,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 14.679232334005064,
+            "free_gb": 14.425674438476562,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 14.784554792000563,
+            "free_gb": 14.5303955078125,
+            "swap_used_gb": 1.652587890625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "warmup-1",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 6.8,
+        "gen_tok_s": 10.3,
+        "prompt_eval_s": 0.0,
+        "generation_s": 6.213592233009709,
+        "wall_s": 29.356670583001687,
+        "load_s": 23.143078349991978,
+        "ttft_ms": 97.08737864077669,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "64",
+          "-p",
+          "Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--perf",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--warmup-1.log",
+        "wall_s": 29.356670583001687,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.263900756835938,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.007 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\n\nSparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\n\n### 1. Active Experts vs. Total Parameters\nWhile an MoE model may have 50B total parameters, a singlellama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=3930 refs=30912 uniq=30912 hit=57.4% miss/call=3.35 bytes=48.39 GiB topk=1.438 ms resolve=2.308 ms install=9002.783 ms source=8000.391 ms upload=0.000 ms slotwr=2.819 ms trace=0.129 ms other=4.275 ms pread=26336 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=5066.253 ms / 27.35 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=3930.600 ms / 21.04 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=12688\nlog_runtime_summary: Flash-MoE layer=2 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=445.461 ms\nlog_runtime_summary: Flash-MoE layer=1 calls=131 uniq=1048 hit=39.3% miss=636 cold=16 evict=620 peak=16 bytes=2630.33 MiB install=413.749 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=131 uniq=1048 hit=53.1% miss=492 cold=16 evict=476 peak=16 bytes=2034.79 MiB install=401.514 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=131 uniq=1048 hit=39.4% miss=635 cold=16 evict=619 peak=16 bytes=2626.20 MiB install=375.088 ms\nlog_runtime_summary: Flash-MoE layer=15 calls=131 uniq=1048 hit=51.6% miss=507 cold=16 evict=491 peak=16 bytes=1737.37 MiB install=367.460 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=365.553 ms\nlog_runtime_summary: Flash-MoE layer=8 calls=131 uniq=1048 hit=60.7% miss=412 cold=16 evict=396 peak=16 bytes=1703.93 MiB install=359.620 ms\nlog_runtime_summary: Flash-MoE layer=29 calls=131 uniq=520 hit=39.0% miss=317 cold=16 evict=301 peak=16 bytes=1311.03 MiB install=350.093 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 6.8 t/s | Generation: 10.3 t/s ]\n\nExiting...",
+          "line_count": 96
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.0032338750024791807,
+            "free_gb": 14.530441284179688,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 1.0465670410048915,
+            "free_gb": 14.53680419921875,
+            "swap_used_gb": 1.652587890625
+          },
+          {
+            "elapsed_s": 2.092176208010642,
+            "free_gb": 14.564178466796875,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 3.1382416660053423,
+            "free_gb": 14.68865966796875,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 4.171614250008133,
+            "free_gb": 14.796798706054688,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 5.212253375008004,
+            "free_gb": 14.878799438476562,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 6.248281500011217,
+            "free_gb": 15.021331787109375,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 7.288205958000617,
+            "free_gb": 15.029541015625,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 8.335651458008215,
+            "free_gb": 15.066085815429688,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 9.371017750003375,
+            "free_gb": 14.809249877929688,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 10.406501165998634,
+            "free_gb": 14.300857543945312,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 11.428981625009328,
+            "free_gb": 13.288421630859375,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 12.468312625002,
+            "free_gb": 12.004119873046875,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 13.507910500004073,
+            "free_gb": 10.334365844726562,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 14.544476916009444,
+            "free_gb": 10.108963012695312,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 15.575332082997193,
+            "free_gb": 10.090164184570312,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 16.61643679100962,
+            "free_gb": 10.067352294921875,
+            "swap_used_gb": 1.644775390625
+          },
+          {
+            "elapsed_s": 17.66187708301004,
+            "free_gb": 9.826568603515625,
+            "swap_used_gb": 1.613525390625
+          },
+          {
+            "elapsed_s": 18.756004833005136,
+            "free_gb": 9.910842895507812,
+            "swap_used_gb": 1.590087890625
+          },
+          {
+            "elapsed_s": 19.86872879099974,
+            "free_gb": 9.650665283203125,
+            "swap_used_gb": 1.543212890625
+          },
+          {
+            "elapsed_s": 20.909707500002696,
+            "free_gb": 9.299163818359375,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 21.973544791006134,
+            "free_gb": 9.263900756835938,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 23.011917708005058,
+            "free_gb": 9.600341796875,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 24.057283750007628,
+            "free_gb": 9.438934326171875,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 25.09762225000304,
+            "free_gb": 9.422439575195312,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 26.13101275000372,
+            "free_gb": 9.465179443359375,
+            "swap_used_gb": 1.527587890625
+          },
+          {
+            "elapsed_s": 27.17645829101093,
+            "free_gb": 9.426437377929688,
+            "swap_used_gb": 1.53253173828125
+          },
+          {
+            "elapsed_s": 28.215386041003512,
+            "free_gb": 9.422088623046875,
+            "swap_used_gb": 1.56005859375
+          },
+          {
+            "elapsed_s": 29.25259995801025,
+            "free_gb": 13.243301391601562,
+            "swap_used_gb": 1.55224609375
+          },
+          {
+            "elapsed_s": 29.356670583001687,
+            "free_gb": 13.32916259765625,
+            "swap_used_gb": 1.55224609375
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-1",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 10.2,
+        "gen_tok_s": 13.9,
+        "prompt_eval_s": 0.0,
+        "generation_s": 4.60431654676259,
+        "wall_s": 27.81688962499902,
+        "load_s": 23.21257307823643,
+        "ttft_ms": 71.94244604316546,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "64",
+          "-p",
+          "Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--perf",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--benchmark-1.log",
+        "wall_s": 27.81688962499902,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 8.829147338867188,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.006 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\n\nSparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\n\n### 1. Active Experts vs. Total Parameters\nWhile an MoE model may have 50B total parameters, a singlellama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=3930 refs=30912 uniq=30912 hit=57.4% miss/call=3.35 bytes=48.39 GiB topk=0.963 ms resolve=1.870 ms install=8266.567 ms source=7432.804 ms upload=0.000 ms slotwr=2.849 ms trace=0.115 ms other=4.447 ms pread=26336 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=4603.955 ms / 27.35 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=3657.306 ms / 21.04 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=12688\nlog_runtime_summary: Flash-MoE layer=2 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=427.937 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=131 uniq=1048 hit=53.1% miss=492 cold=16 evict=476 peak=16 bytes=2034.79 MiB install=383.923 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=370.100 ms\nlog_runtime_summary: Flash-MoE layer=1 calls=131 uniq=1048 hit=39.3% miss=636 cold=16 evict=620 peak=16 bytes=2630.33 MiB install=369.211 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=131 uniq=1048 hit=39.4% miss=635 cold=16 evict=619 peak=16 bytes=2626.20 MiB install=365.397 ms\nlog_runtime_summary: Flash-MoE layer=8 calls=131 uniq=1048 hit=60.7% miss=412 cold=16 evict=396 peak=16 bytes=1703.93 MiB install=335.506 ms\nlog_runtime_summary: Flash-MoE layer=29 calls=131 uniq=520 hit=39.0% miss=317 cold=16 evict=301 peak=16 bytes=1311.03 MiB install=317.227 ms\nlog_runtime_summary: Flash-MoE layer=26 calls=131 uniq=1048 hit=54.7% miss=475 cold=16 evict=459 peak=16 bytes=1964.48 MiB install=312.128 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 10.2 t/s | Generation: 13.9 t/s ]\n\nExiting...",
+          "line_count": 96
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.010040833003586158,
+            "free_gb": 13.33148193359375,
+            "swap_used_gb": 1.55224609375
+          },
+          {
+            "elapsed_s": 1.0517985000042245,
+            "free_gb": 12.026748657226562,
+            "swap_used_gb": 1.52880859375
+          },
+          {
+            "elapsed_s": 2.0889603749965318,
+            "free_gb": 11.796371459960938,
+            "swap_used_gb": 1.52880859375
+          },
+          {
+            "elapsed_s": 3.139021708004293,
+            "free_gb": 11.119094848632812,
+            "swap_used_gb": 1.5318603515625
+          },
+          {
+            "elapsed_s": 4.175440166000044,
+            "free_gb": 10.410873413085938,
+            "swap_used_gb": 1.5240478515625
+          },
+          {
+            "elapsed_s": 5.213835707996623,
+            "free_gb": 9.795852661132812,
+            "swap_used_gb": 1.51678466796875
+          },
+          {
+            "elapsed_s": 6.251772666000761,
+            "free_gb": 9.593734741210938,
+            "swap_used_gb": 1.51678466796875
+          },
+          {
+            "elapsed_s": 7.275486625003396,
+            "free_gb": 9.303085327148438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 8.314426750002895,
+            "free_gb": 9.540313720703125,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 9.356081541001913,
+            "free_gb": 9.867507934570312,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 10.384857375000138,
+            "free_gb": 9.829574584960938,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 11.423610625002766,
+            "free_gb": 9.568817138671875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 12.45093383299536,
+            "free_gb": 8.969940185546875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 13.493024208000861,
+            "free_gb": 8.829147338867188,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 14.535865249999915,
+            "free_gb": 8.907089233398438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 15.57157970800472,
+            "free_gb": 8.998489379882812,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 16.605513375005103,
+            "free_gb": 9.471847534179688,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 17.65050175000215,
+            "free_gb": 9.211166381835938,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 18.69353029099875,
+            "free_gb": 9.084747314453125,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 19.72307649999857,
+            "free_gb": 8.961105346679688,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 20.76498675000039,
+            "free_gb": 8.976043701171875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 21.80555383300816,
+            "free_gb": 9.033416748046875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 22.83597570800339,
+            "free_gb": 9.07513427734375,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 23.87215329099854,
+            "free_gb": 9.37762451171875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 24.912107374999323,
+            "free_gb": 9.389999389648438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 25.949009832998854,
+            "free_gb": 9.407455444335938,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 26.98077999999805,
+            "free_gb": 9.413604736328125,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 27.81688962499902,
+            "free_gb": 13.675613403320312,
+            "swap_used_gb": 1.51458740234375
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-2",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 10.9,
+        "gen_tok_s": 14.2,
+        "prompt_eval_s": 0.0,
+        "generation_s": 4.507042253521127,
+        "wall_s": 22.288783042007708,
+        "load_s": 17.78174078848658,
+        "ttft_ms": 70.42253521126761,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "64",
+          "-p",
+          "Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--perf",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--benchmark-2.log",
+        "wall_s": 22.288783042007708,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 8.809494018554688,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.005 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\n\nSparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\n\n### 1. Active Experts vs. Total Parameters\nWhile an MoE model may have 50B total parameters, a singlellama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=3930 refs=30912 uniq=30912 hit=57.4% miss/call=3.35 bytes=48.39 GiB topk=0.780 ms resolve=1.869 ms install=7714.466 ms source=6852.556 ms upload=0.000 ms slotwr=2.932 ms trace=0.129 ms other=4.660 ms pread=26336 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=4321.492 ms / 27.35 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=3387.794 ms / 21.04 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=12688\nlog_runtime_summary: Flash-MoE layer=1 calls=131 uniq=1048 hit=39.3% miss=636 cold=16 evict=620 peak=16 bytes=2630.33 MiB install=361.015 ms\nlog_runtime_summary: Flash-MoE layer=2 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=357.943 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=131 uniq=1048 hit=39.4% miss=635 cold=16 evict=619 peak=16 bytes=2626.20 MiB install=351.427 ms\nlog_runtime_summary: Flash-MoE layer=8 calls=131 uniq=1048 hit=60.7% miss=412 cold=16 evict=396 peak=16 bytes=1703.93 MiB install=335.971 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=335.336 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=131 uniq=1048 hit=53.1% miss=492 cold=16 evict=476 peak=16 bytes=2034.79 MiB install=331.323 ms\nlog_runtime_summary: Flash-MoE layer=4 calls=131 uniq=1048 hit=53.4% miss=488 cold=16 evict=472 peak=16 bytes=1672.26 MiB install=293.717 ms\nlog_runtime_summary: Flash-MoE layer=26 calls=131 uniq=1048 hit=54.7% miss=475 cold=16 evict=459 peak=16 bytes=1964.48 MiB install=292.825 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 10.9 t/s | Generation: 14.2 t/s ]\n\nExiting...",
+          "line_count": 96
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.002100334007991478,
+            "free_gb": 13.676513671875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 1.0504363750078483,
+            "free_gb": 12.995010375976562,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 2.091592042008415,
+            "free_gb": 13.040191650390625,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 3.1342771670024376,
+            "free_gb": 13.1746826171875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 4.1675120840081945,
+            "free_gb": 13.04193115234375,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 5.201568500007852,
+            "free_gb": 13.1407470703125,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 6.229040625010384,
+            "free_gb": 13.240676879882812,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 7.269878709004843,
+            "free_gb": 12.764022827148438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 8.307210958999349,
+            "free_gb": 13.085052490234375,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 9.340865334001137,
+            "free_gb": 11.9017333984375,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 10.369396000009147,
+            "free_gb": 10.447006225585938,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 11.408166334003909,
+            "free_gb": 9.284774780273438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 12.450467583999853,
+            "free_gb": 8.837371826171875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 13.490097667003283,
+            "free_gb": 8.9996337890625,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 14.524879375007004,
+            "free_gb": 9.016571044921875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 15.55926150000596,
+            "free_gb": 8.95098876953125,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 16.586707584006945,
+            "free_gb": 9.052780151367188,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 17.62353150000854,
+            "free_gb": 8.870498657226562,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 18.660643250012072,
+            "free_gb": 8.809494018554688,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 19.694612250008504,
+            "free_gb": 8.847274780273438,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 20.728410959010944,
+            "free_gb": 9.0213623046875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 21.766923125003814,
+            "free_gb": 9.03900146484375,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 22.288783042007708,
+            "free_gb": 13.273651123046875,
+            "swap_used_gb": 1.51458740234375
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-3",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 10.9,
+        "gen_tok_s": 13.8,
+        "prompt_eval_s": 0.0,
+        "generation_s": 4.63768115942029,
+        "wall_s": 23.323548707994632,
+        "load_s": 18.685867548574343,
+        "ttft_ms": 72.46376811594203,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-cli",
+          "--color",
+          "off",
+          "--simple-io",
+          "-m",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "-c",
+          "4096",
+          "-n",
+          "64",
+          "-p",
+          "Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.",
+          "-cnv",
+          "-st",
+          "-fit",
+          "on",
+          "--seed",
+          "42",
+          "--temp",
+          "0",
+          "--top-k",
+          "1",
+          "--top-p",
+          "1.0",
+          "--perf",
+          "--threads",
+          "10",
+          "--threads-batch",
+          "10",
+          "--batch-size",
+          "1",
+          "--ubatch-size",
+          "1",
+          "--gpu-layers",
+          "0",
+          "--moe-mode",
+          "slot-bank",
+          "--moe-sidecar",
+          "./autoresearch/results/flashmoe_full_sidecar",
+          "--moe-slot-bank",
+          "16"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense--benchmark-3.log",
+        "wall_s": 23.323548707994632,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 8.883544921875,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "ggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.006 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\n\nFlash-MoE settings:\n  mode             = slot-bank\n  sidecar          = ./autoresearch/results/flashmoe_full_sidecar\n  slot-bank        = 16\n  topk-override    = 0\n  cache-io-split   = 1\n  prefetch-temporal = off\n  shared-only      = off\n  trace-harness    = off\n  n_gpu_layers     = 0\n  gpu-bank         = off (compiled=off, env-disable=off)\n  ds2/kimi-gpu-bank = on (default)\n  parallel-reads   = off",
+          "tail": "  metal-disable-generic-mm = off\n  metal-disable-op-mul-mat = off\n  metal-disable-op-mul-mat-id = off\n  metal-disable-op-get-rows = off\n  metal-disable-routed = off\n  metal-routed-only = off\n  metal-disable-routed-post = off\n  metal-disable-routed-types = -\n  metal-disable-shared-types = -\n  cpu-vis-writes   = off\n\n\nLoading model... \n\n\n\u2584\u2584 \u2584\u2584\n\u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588  \u2580\u2580\u2588\u2584 \u2588\u2588\u2588\u2584\u2588\u2588\u2588\u2584  \u2580\u2580\u2588\u2584    \u2584\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2584 \u2588\u2588\u2588\u2588\u2584\n\u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2584\u2588\u2580\u2588\u2588    \u2588\u2588    \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588\n\u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2588\u2588 \u2588\u2588 \u2580\u2588\u2584\u2588\u2588 \u2588\u2588 \u2580\u2588\u2588\u2588\u2588 \u2588\u2588\u2588\u2588\u2580 \u2588\u2588\u2588\u2588\u2580\n                                    \u2588\u2588    \u2588\u2588\n                                    \u2580\u2580    \u2580\u2580\n\nbuild      : b1-1d3db07\nmodel      : gemma-4-26B-A4B-it-Q4_K_M.gguf\nmodalities : text\n\navailable commands:\n  /exit or Ctrl+C     stop or exit\n  /regen              regenerate the last response\n  /clear              clear the chat history\n  /read               add a text file\n\n\n> Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\n\nSparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\n\n### 1. Active Experts vs. Total Parameters\nWhile an MoE model may have 50B total parameters, a singlellama_memory_breakdown_print: | memory breakdown [MiB]  | total    free    self   model   context   compute    unaccounted |\nllama_memory_breakdown_print: |   - MTL0 (Apple M4 Pro) | 18186 = 18185 + (   0 =     0 +       0 +       0) +           0 |\nllama_memory_breakdown_print: |   - Host                |                  2818 =  2487 +     330 +       1                |\nllama_memory_breakdown_print: |   - CPU_REPACK          |                  1467 =  1467 +       0 +       0                |\nlog_runtime_summary: Flash-MoE routed src=pread-slot-bank calls=3930 refs=30912 uniq=30912 hit=57.4% miss/call=3.35 bytes=48.39 GiB topk=0.880 ms resolve=2.025 ms install=7934.597 ms source=7096.444 ms upload=0.000 ms slotwr=3.031 ms trace=0.123 ms other=4.490 ms pread=26336 rcopy=0 iosplit=1 async=off preads=off batchrd=off mixbuf=off cpuvis=off\nlog_runtime_summary: Flash-MoE install gate_up=4444.367 ms / 27.35 GiB gate=0.000 ms / 0.00 GiB up=0.000 ms / 0.00 GiB down=3485.051 ms / 21.04 GiB\nlog_runtime_summary: Flash-MoE residency cold=480 evict=12688\nlog_runtime_summary: Flash-MoE layer=2 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=440.260 ms\nlog_runtime_summary: Flash-MoE layer=8 calls=131 uniq=1048 hit=60.7% miss=412 cold=16 evict=396 peak=16 bytes=1703.93 MiB install=379.997 ms\nlog_runtime_summary: Flash-MoE layer=0 calls=131 uniq=1048 hit=39.4% miss=635 cold=16 evict=619 peak=16 bytes=2626.20 MiB install=365.187 ms\nlog_runtime_summary: Flash-MoE layer=1 calls=131 uniq=1048 hit=39.3% miss=636 cold=16 evict=620 peak=16 bytes=2630.33 MiB install=339.781 ms\nlog_runtime_summary: Flash-MoE layer=28 calls=131 uniq=1048 hit=53.1% miss=492 cold=16 evict=476 peak=16 bytes=2034.79 MiB install=338.715 ms\nlog_runtime_summary: Flash-MoE layer=5 calls=131 uniq=1048 hit=54.8% miss=474 cold=16 evict=458 peak=16 bytes=1960.34 MiB install=313.180 ms\nlog_runtime_summary: Flash-MoE layer=27 calls=131 uniq=1048 hit=50.8% miss=516 cold=16 evict=500 peak=16 bytes=2134.04 MiB install=308.912 ms\nlog_runtime_summary: Flash-MoE layer=26 calls=131 uniq=1048 hit=54.7% miss=475 cold=16 evict=459 peak=16 bytes=1964.48 MiB install=291.396 ms\nggml_metal_free: deallocating\n\n\n[ Prompt: 10.9 t/s | Generation: 13.8 t/s ]\n\nExiting...",
+          "line_count": 96
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.002253457991173491,
+            "free_gb": 13.2723388671875,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 1.0465272919973359,
+            "free_gb": 14.128082275390625,
+            "swap_used_gb": 1.51458740234375
+          },
+          {
+            "elapsed_s": 2.088721624997561,
+            "free_gb": 14.069122314453125,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 3.1328429999994114,
+            "free_gb": 14.035537719726562,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 4.170346874991083,
+            "free_gb": 13.8837890625,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 5.2096727499883855,
+            "free_gb": 14.061660766601562,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 6.239081082996563,
+            "free_gb": 14.285934448242188,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 7.264732541996636,
+            "free_gb": 14.178268432617188,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 8.308306332997745,
+            "free_gb": 13.998550415039062,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 9.328814416992827,
+            "free_gb": 13.496688842773438,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 10.364901082997676,
+            "free_gb": 12.225830078125,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 11.396449708001455,
+            "free_gb": 11.418548583984375,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 12.435989249992417,
+            "free_gb": 9.416183471679688,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 13.4694562079967,
+            "free_gb": 9.636871337890625,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 14.511923416997888,
+            "free_gb": 9.25164794921875,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 15.553073167000548,
+            "free_gb": 9.196975708007812,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 16.591404041988426,
+            "free_gb": 9.21405029296875,
+            "swap_used_gb": 1.50677490234375
+          },
+          {
+            "elapsed_s": 17.62577329199121,
+            "free_gb": 9.193588256835938,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 18.655134457992972,
+            "free_gb": 9.205230712890625,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 19.699410125002032,
+            "free_gb": 9.169021606445312,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 20.735162957993452,
+            "free_gb": 8.9552001953125,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 21.766987707989756,
+            "free_gb": 8.909652709960938,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 22.80494533300225,
+            "free_gb": 8.883544921875,
+            "swap_used_gb": 1.49896240234375
+          },
+          {
+            "elapsed_s": 23.323548707994632,
+            "free_gb": 12.840606689453125,
+            "swap_used_gb": 1.49896240234375
+          }
+        ]
+      }
+    }
+  ],
+  "commits": {
+    "workspace": null,
+    "hypura": null,
+    "flashmoe": "1d3db074f2c7abd7fecf8af46ddad7e8460e087b"
+  }
+}

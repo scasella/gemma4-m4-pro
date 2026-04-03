@@ -1,0 +1,77 @@
+{
+  "updated_at": "2026-04-02T23:24:52.688543+00:00",
+  "flashmoe_root": "./anemll-flash-llama.cpp-gemma4",
+  "model_path": "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+  "model_arch": "gemma4",
+  "expert_count": 128,
+  "expert_used_count": 8,
+  "model_size_gb": 15.642503947019577,
+  "routed_expert_gb": 14.091064453125,
+  "dense_shared_gb": 1.551439493894577,
+  "slot_bytes_all_layers_gb": 0.11008644104003906,
+  "machine_state": {
+    "total_gb": 24.0,
+    "used_gb": 9.496353149414062,
+    "available_gb": 14.503646850585938,
+    "swap_used_gb": 1.72003173828125,
+    "launch_reserve_gb": 13.496353149414062,
+    "min_free_gb": 4.0
+  },
+  "disk_state": {
+    "free_gb": 10.494464874267578,
+    "sidecar_required_gb": 14.091064453125,
+    "sidecar_recommended_free_gb": 16.091064453125,
+    "full_sidecar_extract_fits_now": false,
+    "full_sidecar_extract_recommended_now": false,
+    "shortfall_gb": 3.596599578857422,
+    "recommended_shortfall_gb": 5.596599578857422,
+    "disk_margin_gb": 2.0
+  },
+  "routed_tensor_count": 60,
+  "routed_by_family_gb": {
+    "ffn_down_exps": 6.114990234375,
+    "ffn_gate_up_exps": 7.97607421875
+  },
+  "bank_estimates": [
+    {
+      "bank": 8,
+      "slot_bank_gb": 0.8806915283203125,
+      "resident_dense_shared_gb": 1.551439493894577,
+      "resident_model_plus_bank_gb": 2.4321310222148895,
+      "resident_plus_floor_gb": 6.4321310222148895,
+      "resident_plus_floor_fraction_of_ram": 0.26800545925895375,
+      "native_topk_match": true
+    },
+    {
+      "bank": 16,
+      "slot_bank_gb": 1.761383056640625,
+      "resident_dense_shared_gb": 1.551439493894577,
+      "resident_model_plus_bank_gb": 3.312822550535202,
+      "resident_plus_floor_gb": 7.312822550535202,
+      "resident_plus_floor_fraction_of_ram": 0.30470093960563344,
+      "native_topk_match": true
+    },
+    {
+      "bank": 32,
+      "slot_bank_gb": 3.52276611328125,
+      "resident_dense_shared_gb": 1.551439493894577,
+      "resident_model_plus_bank_gb": 5.074205607175827,
+      "resident_plus_floor_gb": 9.074205607175827,
+      "resident_plus_floor_fraction_of_ram": 0.3780919002989928,
+      "native_topk_match": true
+    }
+  ],
+  "smoke_result": null,
+  "sidecar_state": {
+    "manifest_path": null,
+    "tensor_count": 60,
+    "total_bytes_gb": 14.091064453125,
+    "missing_count": 0,
+    "extra_count": 0,
+    "full_routed_coverage": true,
+    "slot_bank_testable": true,
+    "resident_bank_testable": true,
+    "first_missing": [],
+    "first_extra": []
+  }
+}

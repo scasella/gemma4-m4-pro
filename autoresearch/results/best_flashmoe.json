@@ -1,0 +1,18 @@
+{
+  "run_id": "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-",
+  "backend": "flashmoe",
+  "artifact_path": "results/runs/20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-.json",
+  "candidate_path": "candidates/flashmoe-slot-bank-16.yaml",
+  "candidate_export_path": "results/best_flashmoe_candidate.yaml",
+  "summary": {
+    "score": 13.9,
+    "gen_tok_s": 13.9,
+    "prompt_tok_s": 10.9,
+    "ttft_ms": 71.94244604316546,
+    "load_s": 18.685867548574343,
+    "min_free_gb": 8.809494018554688,
+    "swap_delta_gb": 0.0
+  },
+  "measured_runs": 3,
+  "updated_at": "2026-04-03T00:31:38.938191+00:00"
+}

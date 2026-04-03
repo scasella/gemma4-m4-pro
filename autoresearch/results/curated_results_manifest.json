@@ -1,0 +1,28 @@
+{
+  "description": "Saved benchmark and probe artifacts intentionally kept in this lean public repo.",
+  "results_dir": "autoresearch/results",
+  "summary_files": [
+    "best.json",
+    "best_candidate.yaml",
+    "best_flashmoe.json",
+    "best_flashmoe_candidate.yaml",
+    "best_flashmoe_server.json",
+    "best_flashmoe_server_candidate.yaml",
+    "flashmoe_probe_latest.json",
+    "flashmoe_server_probe_latest.json",
+    "hypura_server_probe_latest.json",
+    "machine_profile.json",
+    "runtime_comparison.md"
+  ],
+  "run_artifacts": [
+    "20260402T210451Z-hypura-strict-reserve-probe.json",
+    "20260402T212311Z-hypura-4096-combo-prompt-stable.json",
+    "20260402T234400Z-flashmoe-slot-bank-16-cpu-dense-.json",
+    "20260403T004039Z-flashmoe-server-slot-bank-16-cpu.json"
+  ],
+  "notes": [
+    "This repo keeps a small curated result set instead of the full raw experiment archive.",
+    "The run_artifacts list is the exact benchmark-run subset the lean audit validates.",
+    "The summary_files list covers the exported best-known configs, probes, machine profile, and comparison summary."
+  ]
+}

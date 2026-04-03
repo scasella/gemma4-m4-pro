@@ -1,0 +1,403 @@
+{
+  "run_id": "20260402T212311Z-hypura-4096-combo-prompt-stable",
+  "started_at": "2026-04-02T21:23:11.387229+00:00",
+  "finished_at": "2026-04-02T21:23:27.412569+00:00",
+  "candidate_path": "candidate.yaml",
+  "candidate": {
+    "description": "hypura 4096 combo prompt stable",
+    "backend": "hypura",
+    "model_path": "../models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+    "context": 4096,
+    "max_tokens": 64,
+    "correctness_max_tokens": 16,
+    "warmup_runs": 1,
+    "measured_runs": 3,
+    "min_free_gb": 4.0,
+    "max_swap_delta_gb": 0.25,
+    "sample_interval_s": 1.0,
+    "timeout_s": 900,
+    "backend_config": {
+      "threads": 10,
+      "batch_size": 512,
+      "threads_batch": 14,
+      "ubatch_size": 256
+    }
+  },
+  "backend": "hypura",
+  "status": "keep",
+  "summary": {
+    "score": 57.01258085040946,
+    "gen_tok_s": 57.01258085040946,
+    "prompt_tok_s": 67.44101788831443,
+    "ttft_ms": 1025.7408248750003,
+    "load_s": 1.971625834,
+    "min_free_gb": 9.3331298828125,
+    "swap_delta_gb": 0.0
+  },
+  "constraints": {
+    "min_free_gb": 4.0,
+    "max_swap_delta_gb": 0.25,
+    "timeout_s": 900,
+    "sample_interval_s": 1.0
+  },
+  "phase_records": [
+    {
+      "phase": "server-startup",
+      "status": "ok",
+      "metrics": null,
+      "execution": {
+        "command": [
+          "./hypura-main/target/release/hypura",
+          "serve",
+          "./models/gemma-4-26B-A4B-it-Q4_K_M.gguf",
+          "--host",
+          "127.0.0.1",
+          "--port",
+          "49691",
+          "--context",
+          "4096",
+          "--threads",
+          "10",
+          "--batch",
+          "512",
+          "--threads-batch",
+          "14",
+          "--ubatch",
+          "256"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-server.log",
+        "wall_s": 2.100411334002274,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 12.746871948242188,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "=== hypura memory reserve ===\n{\n  \"keep_resident_headroom_gb\": 15.255233764648438,\n  \"memory_reserve_gb\": 15.255233764648438,\n  \"preload_headroom_gb\": 17.255233764648438\n}\n\n2026-04-02T21:23:11.414517Z  INFO hypura::scheduler::placement: Sparse MoE mmap: 6% activation (8/128 experts), 1.0 GB active of 15.6 GB total (exceeds GPU, will use CPU-only)\n2026-04-02T21:23:11.414566Z  INFO hypura::scheduler::placement: Sparse MoE mmap: active working set fits in RAM, using OS page cache\n2026-04-02T21:23:11.414755Z  INFO hypura::compute::inference: Sparse MoE mmap: model (15.6 GB) exceeds GPU budget (0.9 GB), using CPU-only (ngl=0)\nLoading model...\nggml_metal_device_init: tensor API disabled for pre-M5 and pre-A19 devices\nggml_metal_library_init: using embedded metal library\nggml_metal_library_init: loaded in 0.005 sec\nggml_metal_rsets_init: creating a residency set collection (keep_alive = 180 s)\nggml_metal_device_init: GPU name:   MTL0\nggml_metal_device_init: GPU family: MTLGPUFamilyApple9  (1009)\nggml_metal_device_init: GPU family: MTLGPUFamilyCommon3 (3003)\nggml_metal_device_init: GPU family: MTLGPUFamilyMetal4  (5002)\nggml_metal_device_init: simdgroup reduction   = true\nggml_metal_device_init: simdgroup matrix mul. = true\nggml_metal_device_init: has unified memory    = true\nggml_metal_device_init: has bfloat            = true\nggml_metal_device_init: has tensor            = false\nggml_metal_device_init: use residency sets    = true\nggml_metal_device_init: use shared buffers    = true\nggml_metal_device_init: recommendedMaxWorkingSetSize  = 19069.67 MB\nllama_model_load_from_file_impl: using device MTL0 (Apple M4 Pro) (unknown id) - 18185 MiB free\nllama_model_loader: loaded meta data with 47 key-value pairs and 658 tensors from ./models/gemma-4-26B-A4B-it-Q4_K_M.gguf (version GGUF V3 (latest))\nllama_model_loader: Dumping metadata keys/values. Note: KV overrides do not apply in this output.",
+          "tail": "create_tensor: loading tensor blk.29.attn_output.weight\ncreate_tensor: loading tensor blk.29.attn_q_norm.weight\ncreate_tensor: loading tensor blk.29.attn_k_norm.weight\ncreate_tensor: loading tensor blk.29.post_attention_norm.weight\ncreate_tensor: loading tensor blk.29.layer_output_scale.weight\ncreate_tensor: loading tensor blk.29.ffn_norm.weight\ncreate_tensor: loading tensor blk.29.ffn_gate.weight\ncreate_tensor: loading tensor blk.29.ffn_up.weight\ncreate_tensor: loading tensor blk.29.ffn_down.weight\ncreate_tensor: loading tensor blk.29.post_ffw_norm.weight\ncreate_tensor: loading tensor blk.29.ffn_gate_inp.weight\ncreate_tensor: loading tensor blk.29.ffn_gate_inp.scale\ncreate_tensor: loading tensor blk.29.pre_ffw_norm_2.weight\ncreate_tensor: loading tensor blk.29.post_ffw_norm_1.weight\ncreate_tensor: loading tensor blk.29.post_ffw_norm_2.weight\ncreate_tensor: loading tensor blk.29.ffn_gate_up_exps.weight\ncreate_tensor: loading tensor blk.29.ffn_down_exps.weight\ncreate_tensor: loading tensor blk.0.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.1.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.2.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.3.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.4.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.5.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.6.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.7.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.8.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.9.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.10.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.11.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.12.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.13.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.14.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.15.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.16.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.17.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.18.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.19.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.20.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.21.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.22.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.23.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.24.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.25.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.26.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.27.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.28.ffn_down_exps.scale\ncreate_tensor: loading tensor blk.29.ffn_down_exps.scale\nload_tensors: offloading 0 repeating layers to GPU\nload_tensors: offloaded 0/31 layers to GPU\nload_tensors:   CPU_Mapped model buffer size = 16002.84 MiB\n....................................................................\n\nHypura serving gemma-4-26B-A4B-it-Q4_K_M\n  Endpoint: http://127.0.0.1:49691\n  Ollama-compatible API: /api/generate, /api/chat, /api/tags\n  Runtime config: context=4096, batch=512, ubatch=256, threads=10, threads_batch=14\n\n\n\nServer ready at http://127.0.0.1:49691",
+          "line_count": 874
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.001207916997373104,
+            "free_gb": 12.746871948242188,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.0566334589966573,
+            "free_gb": 15.115249633789062,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.099629834003281,
+            "free_gb": 16.518692016601562,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.100411334002274,
+            "free_gb": 16.518692016601562,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "correctness-sum_digit",
+      "status": "ok",
+      "metrics": null,
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-correctness-sum-digit.log",
+        "wall_s": 1.5543722080037696,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 13.66070556640625,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"correctness-sum_digit\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Answer with one digit only: what is 2+2?\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 16,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:14.974500000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"4\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"correctness-sum_digit\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Answer with one digit only: what is 2+2?\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 16,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:14.974500000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"4\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 1485967583,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 27,\n    \"prompt_eval_duration\": 1311173458,\n    \"eval_count\": 2,\n    \"eval_duration\": 67803583\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.00017549999756738544,
+            "free_gb": 16.518829345703125,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.0340882080054143,
+            "free_gb": 13.66070556640625,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.5543722080037696,
+            "free_gb": 13.679672241210938,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "correctness-capital_paris",
+      "status": "ok",
+      "metrics": null,
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-correctness-capital-paris.log",
+        "wall_s": 0.7335400419979123,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 12.468917846679688,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"correctness-capital_paris\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Answer with one lowercase word only: what is the capital of France?\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 16,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:15.707793000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"paris\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"correctness-capital_paris\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Answer with one lowercase word only: what is the capital of France?\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 16,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:15.707793000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"paris\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 664056625,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 28,\n    \"prompt_eval_duration\": 529869458,\n    \"eval_count\": 2,\n    \"eval_duration\": 29375250\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.00012495899864006788,
+            "free_gb": 13.6796875,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 0.7335400419979123,
+            "free_gb": 12.468917846679688,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "warmup-1",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 25.98049545480325,
+        "gen_tok_s": 33.99806635997577,
+        "prompt_eval_s": 2.617348084,
+        "generation_s": 1.88246,
+        "wall_s": 4.589423916,
+        "load_s": 1.971625834,
+        "ttft_ms": 2646.7615215,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-warmup-1.log",
+        "wall_s": 4.6870050839934265,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.378280639648438,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"warmup-1\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:20.367006000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"warmup-1\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:20.367006000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 4589423916,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 68,\n    \"prompt_eval_duration\": 2617348084,\n    \"eval_count\": 64,\n    \"eval_duration\": 1882460000\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.00013520898937713355,
+            "free_gb": 12.46893310546875,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.0478153339936398,
+            "free_gb": 10.551559448242188,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.089731624990236,
+            "free_gb": 10.305938720703125,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 3.135352208992117,
+            "free_gb": 9.437942504882812,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 4.170845874992665,
+            "free_gb": 9.378280639648438,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 4.6870050839934265,
+            "free_gb": 9.820358276367188,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-1",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 65.82951052249632,
+        "gen_tok_s": 56.913509268280066,
+        "prompt_eval_s": 1.032971375,
+        "generation_s": 1.124513333,
+        "wall_s": 2.274271084,
+        "load_s": 1.971625834,
+        "ttft_ms": 1050.541895828125,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-benchmark-1.log",
+        "wall_s": 2.294299917004537,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.3331298828125,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"benchmark-1\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:22.739669000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"benchmark-1\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:22.739669000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 2274271084,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 68,\n    \"prompt_eval_duration\": 1032971375,\n    \"eval_count\": 64,\n    \"eval_duration\": 1124513333\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.00017679200391285121,
+            "free_gb": 9.82037353515625,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.0394860000087647,
+            "free_gb": 9.3331298828125,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.0873927920038113,
+            "free_gb": 9.345123291015625,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.294299917004537,
+            "free_gb": 9.787063598632812,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-2",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 67.44101788831443,
+        "gen_tok_s": 57.298821670503166,
+        "prompt_eval_s": 1.008288459,
+        "generation_s": 1.116951416,
+        "wall_s": 2.20989425,
+        "load_s": 1.971625834,
+        "ttft_ms": 1025.7408248750003,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-benchmark-2.log",
+        "wall_s": 2.2901026670006104,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.339126586914062,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"benchmark-2\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:24.969825000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"benchmark-2\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:24.969825000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 2209894250,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 68,\n    \"prompt_eval_duration\": 1008288459,\n    \"eval_count\": 64,\n    \"eval_duration\": 1116951416\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.00014191700029186904,
+            "free_gb": 9.787078857421875,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.047966334008379,
+            "free_gb": 9.339126586914062,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.0846514590084553,
+            "free_gb": 9.344192504882812,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.2901026670006104,
+            "free_gb": 9.805984497070312,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    },
+    {
+      "phase": "benchmark-3",
+      "status": "ok",
+      "metrics": {
+        "prompt_tok_s": 67.55816400011166,
+        "gen_tok_s": 57.01258085040946,
+        "prompt_eval_s": 1.006540083,
+        "generation_s": 1.12255925,
+        "wall_s": 2.20293725,
+        "load_s": 1.971625834,
+        "ttft_ms": 1024.08007128125,
+        "tokens_generated": 64
+      },
+      "execution": {
+        "command": [
+          "POST",
+          "http://127.0.0.1:49691/api/chat"
+        ],
+        "log_path": "./autoresearch/results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable-benchmark-3.log",
+        "wall_s": 2.286010541996802,
+        "exit_code": 0,
+        "stop_reason": null,
+        "min_free_gb": 9.348403930664062,
+        "swap_delta_gb": 0.0,
+        "output_excerpt": {
+          "head": "{\n  \"phase\": \"benchmark-3\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:27.253290000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",",
+          "tail": "{\n  \"phase\": \"benchmark-3\",\n  \"url\": \"http://127.0.0.1:49691/api/chat\",\n  \"payload\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"stream\": false,\n    \"messages\": [\n      {\n        \"role\": \"user\",\n        \"content\": \"Write a compact explanation of why sparse mixture-of-experts models can feel fast on unified-memory laptops. Keep the answer dense with plain facts about active experts, memory movement, CPU work, GPU work, and why prompt processing and generation speed can diverge.\"\n      }\n    ],\n    \"options\": {\n      \"temperature\": 0.0,\n      \"top_k\": 1,\n      \"top_p\": 1.0,\n      \"num_predict\": 64,\n      \"seed\": 1\n    }\n  },\n  \"http_status\": 200,\n  \"response\": {\n    \"model\": \"gemma-4-26B-A4B-it-Q4_K_M\",\n    \"created_at\": \"2026-04-02T21:23:27.253290000Z\",\n    \"message\": {\n      \"role\": \"assistant\",\n      \"content\": \"Sparse Mixture-of-Experts (MoE) models achieve high performance on unified-memory laptops (like Apple Silicon) by decoupling **parameter count** from **computational cost**.\\n\\n### 1. Active Experts vs. Total Parameters\\nWhile an MoE model may have 50B+ total parameters, it\"\n    },\n    \"done\": true,\n    \"done_reason\": \"stop\",\n    \"total_duration\": 2202937250,\n    \"load_duration\": 1971625834,\n    \"prompt_eval_count\": 68,\n    \"prompt_eval_duration\": 1006540083,\n    \"eval_count\": 64,\n    \"eval_duration\": 1122559250\n  },\n  \"error\": null,\n  \"stop_reason\": null\n}",
+          "line_count": 40
+        },
+        "memory_samples": [
+          {
+            "elapsed_s": 0.0001193329953821376,
+            "free_gb": 9.806045532226562,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 1.041549917004886,
+            "free_gb": 9.348403930664062,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.080575416999636,
+            "free_gb": 9.3543701171875,
+            "swap_used_gb": 0.881103515625
+          },
+          {
+            "elapsed_s": 2.286010541996802,
+            "free_gb": 10.078857421875,
+            "swap_used_gb": 0.881103515625
+          }
+        ]
+      }
+    }
+  ],
+  "commits": {
+    "workspace": null,
+    "hypura": null
+  }
+}

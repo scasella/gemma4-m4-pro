@@ -1,0 +1,116 @@
+{
+  "description": "Expected high-level file layout for this lean public repo.",
+  "root_files": [
+    ".gitignore",
+    "LICENSE-APACHE-2.0.template",
+    "LICENSE-MIT.template",
+    "LICENSE_OPTIONS.md",
+    "README.md",
+    "RELEASE_CHECKLIST.md",
+    "SETUP_EXTERNALS.md",
+    "chat_gemma4.sh",
+    "finish_public_release.sh",
+    "install_ci_badge.sh",
+    "install_license.sh",
+    "lean_repo_audit.py",
+    "lean_repo_layout_manifest.json",
+    "make_publish_ready.sh",
+    "prepare_public_push.sh",
+    "publish_status.sh",
+    "rehearsal_temp_status.sh",
+    "rehearse_publish_flow.sh",
+    "try_gemma4.sh"
+  ],
+  "root_optional_files": [
+    "LICENSE"
+  ],
+  "root_dirs": [
+    ".github",
+    "autoresearch",
+    "hypura-main",
+    "models"
+  ],
+  "github_dirs": [
+    "workflows"
+  ],
+  "github_workflow_files": [
+    "release-readiness.yml"
+  ],
+  "autoresearch_files": [
+    "README.md",
+    "candidate.yaml",
+    "flashmoe_gemma4_ask.sh",
+    "flashmoe_gemma4_best.sh",
+    "flashmoe_gemma4_serve.sh",
+    "flashmoe_gemma4_slot_smoke.sh",
+    "flashmoe_gemma4_smoke.sh",
+    "flashmoe_probe.py",
+    "flashmoe_server_probe.py",
+    "gemma4_answer.sh",
+    "gemma4_chat.py",
+    "gemma4_server_start.sh",
+    "gemma4_server_status.sh",
+    "gemma4_server_stop.sh",
+    "hypura_server_probe.py",
+    "prepare.py",
+    "program.md",
+    "progress.png",
+    "progress.py",
+    "pyproject.toml",
+    "refresh_current_state.py",
+    "release_readiness_check.py",
+    "restore_best.py",
+    "results.tsv",
+    "runtime_comparison.py",
+    "serve_gemma4_auto.sh",
+    "show_best.py",
+    "streaming_regression_smoke.py",
+    "sweep.py",
+    "sync_best.py",
+    "sync_flashmoe_best.py",
+    "sync_flashmoe_server_best.py",
+    "train.py",
+    "uv.lock"
+  ],
+  "autoresearch_dirs": [
+    "candidates",
+    "results"
+  ],
+  "results_files": [
+    "best.json",
+    "best_candidate.yaml",
+    "best_flashmoe.json",
+    "best_flashmoe_candidate.yaml",
+    "best_flashmoe_server.json",
+    "best_flashmoe_server_candidate.yaml",
+    "curated_results_manifest.json",
+    "flashmoe_probe_latest.json",
+    "flashmoe_server_probe_latest.json",
+    "hypura_server_probe_latest.json",
+    "machine_profile.json",
+    "runtime_comparison.md"
+  ],
+  "results_dirs": [
+    "runs"
+  ],
+  "models_files": [
+    "README.md"
+  ],
+  "hypura_files": [
+    "Cargo.lock",
+    "Cargo.toml",
+    "GEMMA4_M4_PRO.md",
+    "README.md"
+  ],
+  "hypura_dirs": [
+    "hypura-sys",
+    "scripts",
+    "src",
+    "vendor"
+  ],
+  "notes": [
+    "This manifest keeps the high-level public repo shape explicit without listing every vendored source file.",
+    "The curated results manifest handles the exact saved result files kept under autoresearch/results.",
+    "The lean repo audit validates both this layout manifest and the curated results manifest."
+  ]
+}

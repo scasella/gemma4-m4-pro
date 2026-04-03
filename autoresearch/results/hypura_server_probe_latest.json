@@ -1,0 +1,92 @@
+{
+  "updated_at": "2026-04-03T01:01:57Z",
+  "host": "127.0.0.1",
+  "port": 8088,
+  "model": "gemma-4-26B-A4B-it-Q4_K_M",
+  "server": {
+    "pid": 77587,
+    "rss_gb": 12.507919311523438,
+    "vsz_gb": 463.7541198730469,
+    "cpu_pct": 89.0,
+    "elapsed": "00:32",
+    "command": "target/release/hypura serve ./models/gemma-4-26B-A4B-it-Q4_K_M.gguf --host 127.0.0.1 --port 8088 --context 4096 --threads 10 --threads-batch 14 --batch 512 --ubatch 256"
+  },
+  "similar_short_prompt_runs": [
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178105-a. What is the capital of Italy?",
+      "answer": "rome",
+      "elapsed_s": 8.222,
+      "prompt_eval_count": 43,
+      "eval_count": 3,
+      "prompt_ms": 7980.849,
+      "prompt_per_second": 5.39,
+      "predicted_ms": 161.943,
+      "predicted_per_second": 18.53,
+      "ttft_ms": 8034.83,
+      "total_s": 8.221,
+      "load_s": 7.321
+    },
+    {
+      "prompt": "Reply with one digit only. Session 1775178105-b. What is 3+4?",
+      "answer": "7",
+      "elapsed_s": 1.558,
+      "prompt_eval_count": 42,
+      "eval_count": 2,
+      "prompt_ms": 1456.368,
+      "prompt_per_second": 28.84,
+      "predicted_ms": 22.334,
+      "predicted_per_second": 89.55,
+      "ttft_ms": 1467.535,
+      "total_s": 1.558,
+      "load_s": 7.321
+    }
+  ],
+  "similar_short_prompt_summary": {
+    "median_elapsed_s": 4.89,
+    "median_prompt_per_second": 17.11,
+    "median_predicted_per_second": 54.04,
+    "median_prompt_ms": 4718.609,
+    "median_predicted_ms": 92.139,
+    "median_ttft_ms": 4751.182,
+    "median_total_s": 4.889
+  },
+  "exact_repeat_runs": [
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178105-repeat. What is the capital of France?",
+      "answer": "paris",
+      "elapsed_s": 1.055,
+      "prompt_eval_count": 43,
+      "eval_count": 2,
+      "prompt_ms": 970.298,
+      "prompt_per_second": 44.32,
+      "predicted_ms": 27.47,
+      "predicted_per_second": 72.81,
+      "ttft_ms": 984.033,
+      "total_s": 1.054,
+      "load_s": 7.321
+    },
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178105-repeat. What is the capital of France?",
+      "answer": "paris",
+      "elapsed_s": 0.966,
+      "prompt_eval_count": 43,
+      "eval_count": 2,
+      "prompt_ms": 848.417,
+      "prompt_per_second": 50.68,
+      "predicted_ms": 17.658,
+      "predicted_per_second": 113.27,
+      "ttft_ms": 857.246,
+      "total_s": 0.965,
+      "load_s": 7.321
+    }
+  ],
+  "exact_repeat_summary": {
+    "median_elapsed_s": 1.01,
+    "median_prompt_per_second": 47.5,
+    "median_predicted_per_second": 93.04,
+    "median_prompt_ms": 909.358,
+    "median_predicted_ms": 22.564,
+    "median_ttft_ms": 920.639,
+    "median_total_s": 1.01
+  }
+}

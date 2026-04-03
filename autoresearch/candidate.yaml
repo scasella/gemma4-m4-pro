@@ -1,0 +1,17 @@
+description: hypura 4096 combo prompt stable
+backend: hypura
+model_path: ../models/gemma-4-26B-A4B-it-Q4_K_M.gguf
+context: 4096
+max_tokens: 64
+correctness_max_tokens: 16
+warmup_runs: 1
+measured_runs: 3
+min_free_gb: 4.0
+max_swap_delta_gb: 0.25
+sample_interval_s: 1.0
+timeout_s: 900
+backend_config:
+  threads: 10
+  batch_size: 512
+  threads_batch: 14
+  ubatch_size: 256

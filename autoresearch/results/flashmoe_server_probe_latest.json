@@ -1,0 +1,73 @@
+{
+  "updated_at": "2026-04-03T01:02:56Z",
+  "host": "127.0.0.1",
+  "port": 8111,
+  "server": {
+    "pid": 82476,
+    "rss_gb": 4.3186798095703125,
+    "vsz_gb": 426.57273864746094,
+    "cpu_pct": 96.7,
+    "elapsed": "00:39",
+    "command": "./anemll-flash-llama.cpp-gemma4/build-smoke/bin/llama-server --log-colors off -m ./models/gemma-4-26B-A4B-it-Q4_K_M.gguf --moe-mode slot-bank --moe-sidecar ./autoresearch/results/flashmoe_full_sidecar --moe-slot-bank 16 --threads 10 --threads-batch 10 --parallel 1 --no-cache-prompt -fit on -ub 1 -b 1 -ngl 0 -c 4096 --seed 42 --temp 0 --top-k 1 --top-p 1.0 --host 127.0.0.1 --port 8111 --no-webui"
+  },
+  "similar_short_prompt_runs": [
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178166-a. What is the capital of Italy?",
+      "answer": "rome",
+      "elapsed_s": 4.516,
+      "cached_tokens": 0,
+      "prompt_ms": 4402.781,
+      "prompt_per_second": 9.539425195120993,
+      "predicted_ms": 98.519,
+      "predicted_per_second": 20.30065266598321
+    },
+    {
+      "prompt": "Reply with one digit only. Session 1775178166-b. What is 3+4?",
+      "answer": "7",
+      "elapsed_s": 2.079,
+      "cached_tokens": 0,
+      "prompt_ms": 2015.692,
+      "prompt_per_second": 20.340409149810586,
+      "predicted_ms": 53.228,
+      "predicted_per_second": 37.57420906289922
+    }
+  ],
+  "similar_short_prompt_summary": {
+    "median_elapsed_s": 3.298,
+    "median_cached_tokens": 0.0,
+    "median_prompt_per_second": 14.94,
+    "median_predicted_per_second": 28.94,
+    "median_prompt_ms": 3209.236,
+    "median_predicted_ms": 75.874
+  },
+  "exact_repeat_runs": [
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178166-repeat. What is the capital of France?",
+      "answer": "paris",
+      "elapsed_s": 1.849,
+      "cached_tokens": 0,
+      "prompt_ms": 1776.282,
+      "prompt_per_second": 23.644894222876776,
+      "predicted_ms": 61.911,
+      "predicted_per_second": 32.30443701442393
+    },
+    {
+      "prompt": "Reply with one lowercase word only. Session 1775178166-repeat. What is the capital of France?",
+      "answer": "paris",
+      "elapsed_s": 1.729,
+      "cached_tokens": 0,
+      "prompt_ms": 1667.606,
+      "prompt_per_second": 25.18580528014411,
+      "predicted_ms": 50.881,
+      "predicted_per_second": 39.30740354945854
+    }
+  ],
+  "exact_repeat_summary": {
+    "median_elapsed_s": 1.789,
+    "median_cached_tokens": 0.0,
+    "median_prompt_per_second": 24.42,
+    "median_predicted_per_second": 35.81,
+    "median_prompt_ms": 1721.944,
+    "median_predicted_ms": 56.396
+  }
+}

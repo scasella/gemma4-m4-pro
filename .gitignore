@@ -1,0 +1,13 @@
+.DS_Store
+.codex/
+models/*.gguf
+models/*.gguf.*
+autoresearch/.venv/
+autoresearch/__pycache__/
+autoresearch/results/chat_sessions/
+autoresearch/results/auto_server_state.json
+autoresearch/results/flashmoe_full_sidecar/
+autoresearch/results/flashmoe_smoke/
+anemll-flash-llama.cpp-gemma4/
+llama-baseline-build/
+hypura-main/target/

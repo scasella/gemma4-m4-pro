@@ -1,0 +1,21 @@
+{
+  "run_id": "20260402T212311Z-hypura-4096-combo-prompt-stable",
+  "summary": {
+    "score": 57.01258085040946,
+    "gen_tok_s": 57.01258085040946,
+    "prompt_tok_s": 67.44101788831443,
+    "ttft_ms": 1025.7408248750003,
+    "load_s": 1.971625834
+  },
+  "constraints": {
+    "min_free_gb": 4.0,
+    "max_swap_delta_gb": 0.25
+  },
+  "measured_runs": 3,
+  "backend": "hypura",
+  "artifact_path": "results/runs/20260402T212311Z-hypura-4096-combo-prompt-stable.json",
+  "candidate_path": "./autoresearch/.tmp-hypura-4096-combo-stable.yaml",
+  "complexity": 4,
+  "updated_at": "2026-04-02T21:23:27.434027+00:00",
+  "candidate_export_path": "results/best_candidate.yaml"
+}
