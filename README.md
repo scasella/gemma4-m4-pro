@@ -1,5 +1,7 @@
 # Gemma 4 26B A4B on a 24 GB M4 Pro
 
+<p align="center"><strong>Gemma 4 on a 24GB MacBook: measured recipes, runtimes, and fallback paths.</strong></p>
+
 <p align="center"><strong>28.50 → 57.01 tok/s</strong> on tuned Hypura · <strong>19.11 tok/s</strong> on the low-memory Flash-MoE resident server · <strong>4.32 GB</strong> warm memory footprint for the lightweight path</p>
 
 [![Release Readiness](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml/badge.svg)](https://github.com/scasella/gemma4-m4-pro/actions/workflows/release-readiness.yml)
